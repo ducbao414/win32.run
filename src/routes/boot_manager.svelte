@@ -52,7 +52,11 @@
 		 }
 	}
 
+    let selected = false;
     function boot(){
+        if(selected) return;
+        selected = true;
+        
         if(current_option == 0){
             utils.set_installing_windows(false);
             dispatcher('load_page', {url: './xp/starting.svelte'});
