@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="tinymce/tinymce.min.js"></script>
+        
+    </head>
+    <body>
+        <textarea name="" id="tinymce-textarea" style="position:absolute;inset:0"></textarea>
+        
+        <script>
+            
+            tinymce.init({
+                selector: `#tinymce-textarea`,
+                setup: function (editor) {
+                    setup_editor(editor);
+                },
+                plugins: 'preview importcss searchreplace autolink autosave directionality code visualblocks visualchars fullscreen image link table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+                menubar: 'file edit view insert format tools table',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save | insertfile image media template link anchor | ltr rtl',
+                menu: {
+                    file: {title: 'File', items: 'open save save_as new print'},
+                    tools: {title: 'Tools', items: 'wordcount'},
+                    view: {title: 'View', items: 'visualaid visualchars visualblocks preview'}
+                },
+                toolbar_sticky: true,
+                autosave_ask_before_unload: false,
+                autosave_interval: '30s',
+                autosave_prefix: '{path}{query}-{id}-',
+                autosave_restore_when_empty: false,
+                autosave_retention: '2m',
+                image_advtab: false,
+                importcss_append: true,
+                file_picker_callback: async (callback, value, meta) => {
+                    await file_picker_callback(callback, value, meta);
+                },
+                template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+                template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+                quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quicktable',
+                noneditable_class: 'mceNonEditable',
+                toolbar_mode: 'sliding',
+                contextmenu: 'link table',
+                contextmenu_never_use_native: true,
+                quickbars_insert_toolbar: '',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }table { border-spacing: 0; border-collapse: separate; border: 1px solid #000000;} th, td {border: 1px solid #000000;}'
+            });
+        </script>
+
+        <script>
+            function wait_for_elm(selector) {
+                return new Promise(resolve => {
+                    if (document.querySelector(selector)) {
+                        return resolve(document.querySelector(selector));
+                    }
+
+                    const observer = new MutationObserver(mutations => {
+                        if (document.querySelector(selector)) {
+                            resolve(document.querySelector(selector));
+                            observer.disconnect();
+                        }
+                    });
+
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                });
+            }
+
+            function set_content(html){
+                console.log('set content');
+                tinymce.activeEditor.resetContent(html);
+            }
+            function get_content(){
+                return tinymce.activeEditor.getContent();
+            }
+            function outer_html(){
+                return document.querySelector('.tox-edit-area iframe').contentWindow.document.documentElement.outerHTML;
+            }
+
+            function is_dirty(){
+                return tinymce.activeEditor.isDirty();
+            }
+
+            function set_dirty(bool){
+                console.log('set dirty')
+                tinymce.activeEditor.setDirty(bool);
+            }
+            function show_drawer(){
+                wait_for_elm('.tox-tbtn[aria-label="More..."]')
+                .then(elm => {
+                    elm.click();
+                })
+            }
+
+            var initialized = false;
+            var on_dirty = () => {}
+            var open_file = () => {}
+            var save_file = () => {}
+            var save_file_as = () => {}
+            var new_document = () => {}
+            var focus_window = () => {}
+            var export_pdf = () => {}
+            var export_epub = () => {}
+            var export_html = () => {}
+            var export_txt = () => {}
+            var parent_key_event = (e) => {} 
+
+            var file_picker_callback = () => {}
+
+            function setup_editor(editor){
+                editor.on('init', async function (e) {
+                    let editor_el = document.querySelector('.tox-tinymce[role="application"]');
+                    editor_el.setAttribute('style', 'position:absolute;inset:0;');
+                    show_drawer();
+                    tinymce.activeEditor.execCommand('mceToggleVisualAid');
+                    initialized = true;
+                });
+
+                editor.on('Dirty', () => {
+                    console.log('Dirty');
+                    on_dirty();
+                })
+
+                editor.on('OpenWindow', ({ dialog }) => {
+                    let obj = dialog?.getData();
+                    if(obj != null && obj.alt != null && obj.dimensions != null && obj.src != null){
+                        console.log('possibly image');
+                        let dialog_elm = document.querySelector('div[role="dialog"]');
+                        if(dialog_elm != null){
+                            let input_url = dialog_elm.querySelector('input[type="url"]');
+                            input_url?.setAttribute('disabled', true);
+                        }
+                    }
+                })
+
+                editor.on('click', e => {
+                    focus_window();
+                })
+                editor.on('keydown', (e) => {
+                    if(e.ctrlKey || e.metaKey) {
+                        parent_key_event(e);
+                    }
+                })
+                
+                editor.ui.registry.addMenuItem('open', {
+                    text: 'Open',
+                    icon: 'open',
+                    onAction: () => open_file()
+                });
+                editor.ui.registry.addMenuItem('save', {
+                    text: 'Save',
+                    icon: 'save',
+                    onAction: () => save_file()
+                });
+                editor.ui.registry.addMenuItem('save_as', {
+                    text: 'Save As',
+                    icon: 'save-as',
+                    onAction: () => save_file_as()
+                });
+
+                editor.ui.registry.addMenuItem('new', {
+                    text: 'New Document',
+                    icon: 'new',
+                    onAction: () => new_document()
+                });
+
+                editor.ui.registry.addNestedMenuItem('export_as', {
+                    text: 'Export As',
+                    icon: 'export',
+                    getSubmenuItems: () => {
+                        return [
+                            {
+                                type: 'menuitem',
+                                text: 'PDF Document (.pdf)',
+                                onAction: export_pdf
+                            },
+                            {
+                                type: 'menuitem',
+                                text: 'EPUB Publication (.epub)',
+                                onAction: export_epub
+                            },
+                            {
+                                type: 'menuitem',
+                                text: 'Web Page (.html)',
+                                onAction: export_html
+                            },
+                            {
+                                type: 'menuitem',
+                                text: 'Plain Text (.txt)',
+                                onAction: export_txt
+                            },
+                        ]
+                    }
+                });
+            }
+            
+            document.body.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+            })
+            document.body.addEventListener('click', () => {
+                focus_window();
+            })
+
+            document.body.addEventListener('keydown', (e) => {
+                if(e.ctrlKey || e.metaKey) {
+                    parent_key_event(e);
+                }
+            })
+
+
+        </script>
+
+    </body>
+</html>

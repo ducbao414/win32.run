@@ -1,0 +1,238 @@
+<html>
+    <head>
+        <style>
+            html, body {
+                margin: 0;
+                background-color: black;
+            }
+            .webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+}
+
+        </style>
+    </head>
+<!-- CodePen Home
+Studying threejs particle
+alvalau
+
+https://codepen.io/alvalau/pen/ExLEEeK -->
+    <body>
+        <canvas class="webgl"></canvas>
+        <script type="module">
+            import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
+import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls";
+
+const canvas = document.querySelector('canvas.webgl');
+
+const scene = new THREE.Scene();
+
+let sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+  pixelRatio: Math.min(window.devicePixelRatio, 2),
+};
+
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.01,
+  100
+);
+camera.position.set(3.95, 4.86, -0.46);
+camera.lookAt(new THREE.Vector3());
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
+window.addEventListener('resize', () => {
+  sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+    pixelRatio: Math.min(window.devicePixelRatio, 2),
+  };
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(sizes.pixelRatio);
+});
+
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(sizes.pixelRatio);
+
+const parameters = {
+  count: 200000,
+  branches: 2,
+  radius: 5,
+  innerColor: '#86ffbd',
+  outterColor: '#1b3984',
+  randomness: 0.777,
+  randomnessPow: 2,
+};
+
+class Particle {
+  constructor(parameters = {}) {
+    this.instant = null;
+    this.geometry = null;
+    this.material = null;
+    this.count = parameters.count;
+    this.branches = parameters.branches;
+    this.radius = parameters.radius;
+    this.innerColor = parameters.innerColor;
+    this.outterColor = parameters.outterColor;
+    this.randomness = parameters.randomness;
+    this.randomnessPow = parameters.randomnessPow;
+    this.scene = scene;
+
+    this.generate();
+  }
+
+  generate = () => {
+    if (this.instant !== null) {
+      this.geometry.dispose();
+      this.material.dispose();
+      this.scene.remove(this.instant);
+    }
+
+    this.geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(this.count * 3);
+    const colors = new Float32Array(this.count * 3);
+    const randomness = new Float32Array(this.count * 3);
+    const scales = new Float32Array(this.count);
+
+    const innerColor = new THREE.Color(this.innerColor);
+    const outterColor = new THREE.Color(this.outterColor);
+
+    for (let i = 0; i < this.count; i++) {
+      const i3 = i * 3;
+      const t = ((i % this.branches) / this.branches) * Math.PI * 2;
+      const radius = Math.random() * this.radius;
+
+      positions[i3] = Math.cos(t + Math.PI * 0.5) * radius;
+      positions[i3 + 1] = Math.sin(t + Math.PI * 0.5) * radius;
+      positions[i3 + 2] = 0;
+
+      randomness[i3] =
+        Math.pow(Math.random(), this.randomnessPow) *
+        (Math.random() < 0.5 ? -1 : 1) *
+        this.randomness *
+        radius;
+      randomness[i3 + 1] =
+        Math.pow(Math.random(), this.randomnessPow) *
+        (Math.random() < 0.5 ? -1 : 1) *
+        this.randomness *
+        radius;
+      randomness[i3 + 2] =
+        Math.pow(Math.random(), this.randomnessPow) *
+        (Math.random() < 0.5 ? -1 : 1) *
+        this.randomness *
+        radius;
+
+      const color = innerColor.clone().lerp(outterColor, radius / this.radius);
+      colors[i3] = color.r;
+      colors[i3 + 1] = color.g;
+      colors[i3 + 2] = color.b;
+
+      scales[i] = Math.random();
+    }
+    this.geometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(positions, 3)
+    );
+    this.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    this.geometry.setAttribute(
+      'aRandom',
+      new THREE.BufferAttribute(randomness, 3)
+    );
+    this.geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
+
+    this.material = new THREE.ShaderMaterial({
+      depthWrite: false,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      uniforms: {
+        uTime: {value: 0},
+        uCamPos: {value: camera.position},
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform vec3 uCamPos;
+
+        attribute vec3 aRandom;
+        attribute float aScale;
+
+        varying vec3 vColor;
+
+        void main() {
+          vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+          float angle = atan(modelPosition.y, modelPosition.x);
+          float vecLength = length(modelPosition.xy);
+          float angleOffset = (1.0 / vecLength) * uTime;
+          angle += angleOffset;
+
+          modelPosition.x = cos(angle) * (vecLength);
+          modelPosition.z = sin(angle) * (vecLength);
+          modelPosition.y += tan(angle) * dot(normalize(uCamPos), vec3(0.0, 0.0, 1.0));
+          
+          modelPosition.xyz += aRandom;
+
+          vec4 mvPosition = viewMatrix * modelPosition;
+          gl_Position = projectionMatrix * mvPosition;
+
+          gl_PointSize = 8.0 * aScale;
+          gl_PointSize *= (1.0 / - mvPosition.z);
+
+          vColor = color;
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+
+        varying vec3 vColor;
+        
+        vec3 convertHsvToRgb(vec3 c) {
+          vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+          vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+          return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+        }
+
+        void main() {
+          float strength = 1.0 - distance(gl_PointCoord, vec2(0.5));
+          strength = step(0.5, strength);
+
+          vec3 timedColor = vColor;
+          timedColor.rgb = mod(timedColor.rgb + uTime * 0.05, 1.0);
+          timedColor = convertHsvToRgb(vec3(vColor.x + uTime * 0.04, 0.6, 0.8));
+
+          vec3 color = mix(vec3(0.0), timedColor, strength);
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `,
+    });
+
+    this.instant = new THREE.Points(this.geometry, this.material);
+    this.scene.add(this.instant);
+  };
+}
+
+const particle = new Particle(parameters);
+
+const clock = new THREE.Clock();
+
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime();
+  particle.material.uniforms.uTime.value = elapsedTime;
+  particle.material.uniforms.uCamPos.value = camera.position;
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+};
+
+tick();
+
+        </script>
+    </body>
+</html>

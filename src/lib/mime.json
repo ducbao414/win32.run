@@ -1,0 +1,367 @@
+[
+    {
+      "name": "AAC audio",
+      "mime": "audio/aac",
+      "ext": ".aac"
+    },
+    {
+      "name": "AbiWord document",
+      "mime": "application/x-abiword",
+      "ext": ".abw"
+    },
+    {
+      "name": "Archive document (multiple files embedded)",
+      "mime": "application/x-freearc",
+      "ext": ".arc"
+    },
+    {
+      "name": "AVIF image",
+      "mime": "image/avif",
+      "ext": ".avif"
+    },
+    {
+      "name": "AVI: Audio Video Interleave",
+      "mime": "video/x-msvideo",
+      "ext": ".avi"
+    },
+    {
+      "name": "Amazon Kindle eBook format",
+      "mime": "application/vnd.amazon.ebook",
+      "ext": ".azw"
+    },
+    {
+      "name": "Any kind of binary data",
+      "mime": "application/octet-stream",
+      "ext": ".bin"
+    },
+    {
+      "name": "Windows OS/2 Bitmap Graphics",
+      "mime": "image/bmp",
+      "ext": ".bmp"
+    },
+    {
+      "name": "BZip archive",
+      "mime": "application/x-bzip",
+      "ext": ".bz"
+    },
+    {
+      "name": "BZip2 archive",
+      "mime": "application/x-bzip2",
+      "ext": ".bz2"
+    },
+    {
+      "name": "CD audio",
+      "mime": "application/x-cdf",
+      "ext": ".cda"
+    },
+    {
+      "name": "C-Shell script",
+      "mime": "application/x-csh",
+      "ext": ".csh"
+    },
+    {
+      "name": "Cascading Style Sheets (CSS)",
+      "mime": "text/css",
+      "ext": ".css"
+    },
+    {
+      "name": "Comma-separated values (CSV)",
+      "mime": "text/csv",
+      "ext": ".csv"
+    },
+    {
+      "name": "Microsoft Word",
+      "mime": "application/msword",
+      "ext": ".doc"
+    },
+    {
+      "name": "Microsoft Word (OpenXML)",
+      "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ext": ".docx"
+    },
+    {
+      "name": "MS Embedded OpenType fonts",
+      "mime": "application/vnd.ms-fontobject",
+      "ext": ".eot"
+    },
+    {
+      "name": "Electronic publication (EPUB)",
+      "mime": "application/epub+zip",
+      "ext": ".epub"
+    },
+    {
+      "name": "GZip Compressed Archive",
+      "mime": "application/gzip",
+      "ext": ".gz"
+    },
+    {
+      "name": "Graphics Interchange Format (GIF)",
+      "mime": "image/gif",
+      "ext": ".gif"
+    },
+    {
+      "name": "HyperText Markup Language (HTML)",
+      "mime": "text/html",
+      "ext": ".html"
+    },
+    {
+      "name": "Icon format",
+      "mime": "image/vnd.microsoft.icon",
+      "ext": ".ico"
+    },
+    {
+      "name": "iCalendar format",
+      "mime": "text/calendar",
+      "ext": ".ics"
+    },
+    {
+      "name": "Java Archive (JAR)",
+      "mime": "application/java-archive",
+      "ext": ".jar"
+    },
+    {
+      "name": "JPEG images",
+      "mime": "image/jpeg",
+      "ext": ".jpg"
+    },
+    {
+        "name": "JPEG images",
+        "mime": "image/jpeg",
+        "ext": ".jpeg"
+    },
+    {
+      "name": "JavaScript",
+      "mime": "text/javascript (Specifications: HTML and RFC 9239)",
+      "ext": ".js"
+    },
+    {
+      "name": "JSON format",
+      "mime": "application/json",
+      "ext": ".json"
+    },
+    {
+      "name": "JSON-LD format",
+      "mime": "application/ld+json",
+      "ext": ".jsonld"
+    },
+    {
+      "name": "Musical Instrument Digital Interface (MIDI)",
+      "mime": "audio/midi audio/x-midi",
+      "ext": ".mid .midi"
+    },
+    {
+      "name": "JavaScript module",
+      "mime": "text/javascript",
+      "ext": ".mjs"
+    },
+    {
+      "name": "MP3 audio",
+      "mime": "audio/mpeg",
+      "ext": ".mp3"
+    },
+    {
+      "name": "MP4 video",
+      "mime": "video/mp4",
+      "ext": ".mp4"
+    },
+    {
+      "name": "MPEG Video",
+      "mime": "video/mpeg",
+      "ext": ".mpeg"
+    },
+    {
+      "name": "Apple Installer Package",
+      "mime": "application/vnd.apple.installer+xml",
+      "ext": ".mpkg"
+    },
+    {
+      "name": "OpenDocument presentation document",
+      "mime": "application/vnd.oasis.opendocument.presentation",
+      "ext": ".odp"
+    },
+    {
+      "name": "OpenDocument spreadsheet document",
+      "mime": "application/vnd.oasis.opendocument.spreadsheet",
+      "ext": ".ods"
+    },
+    {
+      "name": "OpenDocument text document",
+      "mime": "application/vnd.oasis.opendocument.text",
+      "ext": ".odt"
+    },
+    {
+      "name": "OGG audio",
+      "mime": "audio/ogg",
+      "ext": ".oga"
+    },
+    {
+      "name": "OGG video",
+      "mime": "video/ogg",
+      "ext": ".ogv"
+    },
+    {
+      "name": "OGG",
+      "mime": "application/ogg",
+      "ext": ".ogx"
+    },
+    {
+      "name": "Opus audio",
+      "mime": "audio/opus",
+      "ext": ".opus"
+    },
+    {
+      "name": "OpenType font",
+      "mime": "font/otf",
+      "ext": ".otf"
+    },
+    {
+      "name": "Portable Network Graphics",
+      "mime": "image/png",
+      "ext": ".png"
+    },
+    {
+      "name": "Adobe Portable Document Format (PDF)",
+      "mime": "application/pdf",
+      "ext": ".pdf"
+    },
+    {
+      "name": "Hypertext Preprocessor (Personal Home Page)",
+      "mime": "application/x-httpd-php",
+      "ext": ".php"
+    },
+    {
+      "name": "Microsoft PowerPoint",
+      "mime": "application/vnd.ms-powerpoint",
+      "ext": ".ppt"
+    },
+    {
+      "name": "Microsoft PowerPoint (OpenXML)",
+      "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "ext": ".pptx"
+    },
+    {
+      "name": "RAR archive",
+      "mime": "application/vnd.rar",
+      "ext": ".rar"
+    },
+    {
+      "name": "Rich Text Format (RTF)",
+      "mime": "application/rtf",
+      "ext": ".rtf"
+    },
+    {
+      "name": "Bourne shell script",
+      "mime": "application/x-sh",
+      "ext": ".sh"
+    },
+    {
+      "name": "Scalable Vector Graphics (SVG)",
+      "mime": "image/svg+xml",
+      "ext": ".svg"
+    },
+    {
+      "name": "Tape Archive (TAR)",
+      "mime": "application/x-tar",
+      "ext": ".tar"
+    },
+    {
+      "name": "Tagged Image File Format (TIFF)",
+      "mime": "image/tiff",
+      "ext": ".tif .tiff"
+    },
+    {
+      "name": "MPEG transport stream",
+      "mime": "video/mp2t",
+      "ext": ".ts"
+    },
+    {
+      "name": "TrueType Font",
+      "mime": "font/ttf",
+      "ext": ".ttf"
+    },
+    {
+      "name": "Text, (generally ASCII or ISO 8859-n)",
+      "mime": "text/plain",
+      "ext": ".txt"
+    },
+    {
+      "name": "Microsoft Visio",
+      "mime": "application/vnd.visio",
+      "ext": ".vsd"
+    },
+    {
+      "name": "Waveform Audio Format",
+      "mime": "audio/wav",
+      "ext": ".wav"
+    },
+    {
+      "name": "WEBM audio",
+      "mime": "audio/webm",
+      "ext": ".weba"
+    },
+    {
+      "name": "WEBM video",
+      "mime": "video/webm",
+      "ext": ".webm"
+    },
+    {
+      "name": "WEBP image",
+      "mime": "image/webp",
+      "ext": ".webp"
+    },
+    {
+      "name": "Web Open Font Format (WOFF)",
+      "mime": "font/woff",
+      "ext": ".woff"
+    },
+    {
+      "name": "Web Open Font Format (WOFF)",
+      "mime": "font/woff2",
+      "ext": ".woff2"
+    },
+    {
+      "name": "XHTML",
+      "mime": "application/xhtml+xml",
+      "ext": ".xhtml"
+    },
+    {
+      "name": "Microsoft Excel",
+      "mime": "application/vnd.ms-excel",
+      "ext": ".xls"
+    },
+    {
+      "name": "Microsoft Excel (OpenXML)",
+      "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "ext": ".xlsx"
+    },
+    {
+      "name": "XML",
+      "mime": "application/xml",
+      "ext": ".xml"
+    },
+    {
+      "name": "XUL",
+      "mime": "application/vnd.mozilla.xul+xml",
+      "ext": ".xul"
+    },
+    {
+      "name": "ZIP archive",
+      "mime": "application/zip",
+      "ext": ".zip"
+    },
+    {
+      "name": "3GPP audio/video container",
+      "mime": "video/3gpp; audio/3gpp if it doesn't contain video",
+      "ext": ".3gp"
+    },
+    {
+      "name": "3GPP2 audio/video container",
+      "mime": "video/3gpp2",
+      "ext": ".3g2"
+    },
+    {
+      "name": "7-zip archive",
+      "mime": "application/x-7z-compressed",
+      "ext": ".7z"
+    }
+  ]

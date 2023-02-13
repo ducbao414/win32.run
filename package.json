@@ -1,0 +1,49 @@
+{
+  "name": "web-svelte",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "package": "svelte-kit package",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@jhubbardsf/svelte-sortablejs": "^1.1.0",
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-node": "^1.0.0-next.94",
+    "@sveltejs/kit": "next",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "postcss-load-config": "^4.0.1",
+    "svelte": "^3.44.0",
+    "svelte-preprocess": "^4.10.7",
+    "tailwindcss": "^3.1.5",
+    "vite": "^3.0.4"
+  },
+  "type": "module",
+  "dependencies": {
+    "@faker-js/faker": "^7.5.0",
+    "@tailwindcss/line-clamp": "^0.4.2",
+    "@types/lodash": "^4.14.186",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
+    "buffer": "^6.0.3",
+    "build-url": "^6.0.1",
+    "docx": "^7.7.0",
+    "dragselect": "^2.5.5",
+    "fast-fuzzy": "^1.11.2",
+    "file-saver": "^2.0.5",
+    "idb-keyval": "^6.2.0",
+    "is-valid-http-url": "^1.0.3",
+    "jsdom": "^20.0.3",
+    "jszip": "^3.10.1",
+    "link-preview-js": "^3.0.4",
+    "lodash": "^4.17.21",
+    "node-dir": "^0.1.17",
+    "short-uuid": "^4.2.2",
+    "srt-webvtt": "^2.0.0",
+    "svelte-range-slider-pips": "^2.0.3",
+    "tailwindcss-scoped-groups": "^2.0.0"
+  }
+}

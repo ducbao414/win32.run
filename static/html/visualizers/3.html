@@ -1,0 +1,166 @@
+<html>
+    <head>
+<style>
+    *{ margin: 0px;}
+    html,body{
+        background-color: black;
+    }
+</style>
+    </head>
+    <!-- CodePen Home
+#mathober2022 - Harmonic
+Tom Hinton
+https://codepen.io/TomHinton/pen/MWGqqMN -->
+    <body>
+        <!--
+Created for Mathtober, a series of maths based creative promtps that can be found https://fractalkitty.com/2022/09/17/mathober-2022-prompts/
+
+Wikipedia says "the term "harmonic" is applied when one is considering functions with sinusoidal variations" so I think that  sinwarp must count? ( It almostd definitely doesn't but this is pretty and I don't have time today)
+-->
+
+
+
+
+<div id="shader"></div>
+<script id="vertex" type="x-shader/x-vertex">
+  varying vec2 vUv;
+	void main() { gl_Position = vec4(position, 1.0);
+               vUv = uv;
+              }
+</script>
+
+<script id="fragment" type="x-shader/x-fragment">
+precision highp float;
+
+uniform vec2 u_resolution;
+uniform float u_time;
+  varying vec2 vUv;
+ 
+const float PI = 3.1415926535897932384626433832795;
+const float TAU = PI * 2.;
+  
+ void sinwarp(inout vec3 trip, float warpsScale ){
+  
+  float t = u_time;
+
+  trip.xyz += warpsScale * .1 * sin(3. * trip.yzx + (t * .25));
+  trip.xyz += warpsScale * .05 * sin(11. * trip.yzx + (t * .25));
+  trip.xyz += warpsScale * .025 * sin(17. * trip.yzx + (t * .25));
+  
+}
+  
+
+
+  
+void main() {
+	vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
+  
+
+  	vec3 color = vec3(uv.x, uv.y, 1.);
+  
+  sinwarp(color, 3.);
+  
+  
+    float vTime = u_time + color.r;
+  
+  
+   float vTime2 = u_time + color.g;
+  
+   float vTime3 = u_time + color.b;
+
+ 
+  
+	
+
+ 
+  
+ 
+   color.r = smoothstep(distance(uv, vec2(.5)), (sin(vTime) * .2), (sin(vTime) * .2) +.1);
+
+   color.g = smoothstep(distance(uv, vec2(.5)), (sin(vTime) * .2) +.1, (sin(vTime2) * .2) + .2);
+  
+   color.b = smoothstep(distance(uv, vec2(.5)), (sin(vTime) * .2) +.2, (sin(vTime3) * .2) + .3);
+  
+    color.r += smoothstep(distance(uv, vec2(.5)), (sin(vTime) * .2), (sin(vTime) * .2) +.15);
+
+   color.g += smoothstep(distance(uv, vec2(.5)), (sin(vTime) * .2) +.1, (sin(vTime2) * .2) + .25);
+  
+   color.b += smoothstep(distance(uv, vec2(.5)), (sin(vTime) * .2) +.2, (sin(vTime3) * .2) + .35);
+
+  
+     color.r += smoothstep(distance(uv, vec2(.5)), (cos(vTime) * .2) +.5, (sin(vTime) * .2) +.15);
+
+   color.g += smoothstep(distance(uv, vec2(.5)), (cos(vTime) * .2) +.15, (sin(vTime) * .2) + .25);
+  
+   color.b += smoothstep(distance(uv, vec2(.5)), (cos(vTime) * .2) +.25, (sin(vTime) * .2) + .35);
+
+  color =mix(color, 1.-color, smoothstep(distance(uv, vec2(.5)), (cos(vTime) * .25) +.25, (sin(vTime) * .2) + .35));
+  
+
+  sinwarp(color, 3.);
+	
+    gl_FragColor = vec4(vec3(color.r, color.g, color.b), 1.0);
+}
+</script>
+
+<script type="module">
+    import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
+
+let camera, scene, renderer, clock;
+let uniforms;
+
+function init() {
+	const container = document.getElementById("shader");
+
+	clock = new THREE.Clock();
+	camera = new THREE.Camera();
+	camera.position.z = 1;
+
+	scene = new THREE.Scene();
+
+	const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+	uniforms = {
+		u_time: { type: "f", value: 1.0 },
+		u_resolution: { type: "v2", value: new THREE.Vector2() },
+	};
+
+	const material = new THREE.ShaderMaterial({
+		uniforms,
+		vertexShader: document.getElementById("vertex").textContent,
+		fragmentShader: document.getElementById("fragment").textContent
+	});
+
+	const mesh = new THREE.Mesh(geometry, material);
+	scene.add(mesh);
+
+	renderer = new THREE.WebGLRenderer();
+	renderer.setPixelRatio(window.devicePixelRatio);
+
+	container.appendChild(renderer.domElement);
+
+	onWindowResize();
+	window.addEventListener("resize", onWindowResize);
+}
+
+function onWindowResize() {
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	uniforms.u_resolution.value.x = renderer.domElement.width;
+	uniforms.u_resolution.value.y = renderer.domElement.height;
+}
+
+function render() {
+	uniforms.u_time.value = clock.getElapsedTime();
+	renderer.render(scene, camera);
+}
+
+function animate() {
+	render();
+	requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+    </body>
+</html>

@@ -1,0 +1,543 @@
+:root {
+	--theme-loaded: "modern.css";
+	--Hilight: #0178d7;
+	--HilightText: #ffffff;
+	--WindowText: #000000;
+	--ButtonText: #000000;
+}
+
+body {
+	font-family: Roboto, sans-serif;
+	font-size: 15px;
+}
+
+.canvas-area > canvas {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEW9vb3///8EwsWUAAAADElEQVQI12NoYHAAAAHEAMFJRSpJAAAAAElFTkSuQmCC") repeat;
+	/* 16px is a common grid size, but that gives 8px grid cells, and our max zoom is 8x */
+	/*background-size: 16px;*/
+	background-size: 8px;
+}
+
+@media (resolution: 1x), (resolution: 2x), (min-resolution: 3x) {
+	.canvas-area canvas,
+	.selection canvas,
+	.selection img {
+		image-rendering: -moz-crisp-edges;
+		image-rendering: crisp-edges;
+		image-rendering: pixelated;
+	}
+}
+.disable-aa-for-things-at-main-canvas-scale .main-canvas,
+.disable-aa-for-things-at-main-canvas-scale .selection canvas {
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
+}
+
+.selection:after,
+.textbox:after {
+	content: '';
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	outline: 1px dashed black;
+	box-shadow: 0 0 0 1px white;
+}
+.canvas-area .handle {
+	background: #000080;
+}
+.useless-handle {
+	background: #fff;
+	box-shadow: 1px 1px 0 #000080 inset;
+}
+.resize-ghost {
+	outline: 1px dotted #ccc;
+	mix-blend-mode: difference;
+}
+
+.window {
+	--window-frame-color: #3f51b5;
+}
+.window:not(.focused) {
+	--window-frame-color: #9396a5;
+}
+.window:not(.maximized) {
+	border: 4px solid var(--window-frame-color);
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+.window,
+.menu-popup {
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.menu-popup {
+	border-radius: 2px;
+}
+.window-titlebar {
+	background: var(--window-frame-color);
+	color: white;
+	padding-left: 8px;
+	padding-right: 8px;
+	border-bottom: 4px solid var(--window-frame-color);
+}
+.tool-window .window-titlebar {
+	padding: 5px;
+}
+.window-title-area {
+	padding: 8px;
+}
+.window-content {
+	padding: 16px;
+	background: white;
+	color: black;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+.component-window .window-content {
+	padding: 0;
+}
+.component-window .component {
+	padding: 4px 8px;
+}
+.window-button {
+	border: 0;
+	background: none;
+	color: transparent;
+	transform: scale(1.5);
+	font-size: 1px;
+	border-radius: 50%;
+	width: 17px;
+	height: 17px;
+	margin-left: 10px;
+	position: relative;
+}
+.window-button:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+.window-button:hover:active {
+	background: rgba(255, 255, 255, 0.5);
+}
+.os-window .window-button {
+	transform: scale(1.8);
+}
+.window-button::after {
+	color: white;
+	font-size: 15px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	text-align: center;
+}
+.window-close-button::after {
+	content: "×";
+}
+.window-minimize-button::after {
+	content: "-";
+}
+.window-maximize-button::after {
+	content: "+";
+}
+
+.menus {
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+
+.eye-gaze-mode .menu-button {
+	height: 3rem;
+	line-height: 3rem;
+}
+
+.menu-button,
+.menu-item {
+	outline: 0;
+}
+
+.menu-button {
+	/*padding: 16px;*/
+	padding: 3px 7px 5px 7px;
+	margin-top: 2px;
+	border: 1px solid transparent;
+}
+.menu-button:hover {
+	background: #eeeeee;
+}
+.menu-button:active,
+.menu-button.active {
+	background: #e5e5e5;
+}
+
+.menu-item:hover {
+	background: #eeeeee;
+}
+.menu-item:active,
+.menu-item.active {
+	background: #e5e5e5;
+}
+
+.menu-popup {
+	background: white;
+	padding: 8px 0;
+}
+
+/*.menu-item {
+	padding: 6px 10px 6px 30px;
+}*/
+.menu-item td {
+	/*height: 32px;*/
+	height: 27px;
+	padding: 0;
+}
+.menu-item td:first-child {
+	padding-left: 16px;
+}
+.menu-item td:last-child {
+	padding-right: 16px;
+}
+.menu-item[disabled] {
+	color: #bdbdbd;
+}
+.menu-item.active {
+	background: #eeeeee;
+}
+.menu-hr {
+	/*height: 32px;*/
+	margin-top: 6px;
+	margin-bottom: 6px;
+	border: 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.menu-item .menu-item-checkbox-area {
+	padding-right: 8px;
+}
+.menu-item .menu-item-shortcut {
+	padding-left: 16px;
+}
+
+/* Menu item SVG for checkboxes and submenu indicators, copy pasted from OS-GUI's CSS */
+/* Note: viewBox is needed for scaling the SVG, used in Eye Gaze Mode */
+.menu-item-checkbox-area::after {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' style='fill:currentColor;display:inline-block;vertical-align:middle' %3E%3Cpath d='M5 7v3l2 2 5-5V4L7 9Z'/%3E%3C/svg%3E");
+	        mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' style='fill:currentColor;display:inline-block;vertical-align:middle' %3E%3Cpath d='M5 7v3l2 2 5-5V4L7 9Z'/%3E%3C/svg%3E");
+}
+.menu-item-checkbox-area.radio::after {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' style='fill:currentColor;display:inline-block;vertical-align:middle' %3E%3Ccircle cx='8' cy='8' r='3'/%3E%3C/svg%3E");
+	        mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' style='fill:currentColor;display:inline-block;vertical-align:middle' %3E%3Ccircle cx='8' cy='8' r='3'/%3E%3C/svg%3E");
+}
+.has-submenu .menu-item-submenu-area::after {
+	-webkit-mask-image: url("data:image/svg+xml, %3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' style='fill:currentColor;display:inline-block;vertical-align:middle' %3E%3Cpath d='m6 4 4 4-4 4z'/%3E%3C/svg%3E");
+	        mask-image: url("data:image/svg+xml, %3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' style='fill:currentColor;display:inline-block;vertical-align:middle' %3E%3Cpath d='m6 4 4 4-4 4z'/%3E%3C/svg%3E");
+}
+.has-submenu .menu-item-submenu-area.point-right::after {
+	transform: scaleX(-1);
+}
+.menu-item-checkbox-area::after,
+.menu-item-submenu-area::after {
+	content: "";
+	display: block;
+	width: 16px;
+	height: 16px;
+	/* no background means it's invisible by default here (masking transparent gives transparent, i.e. nothing) */
+}
+.menu-item[aria-checked=true] .menu-item-checkbox-area::after,
+.menu-item.has-submenu .menu-item-submenu-area::after {
+	/* makes it visible */
+	background: currentColor;
+}
+
+
+.color-selection {
+	width: 18px;
+	height: 18px;
+}
+.color-button, /* this outer one is only for detection for the hover halo in eye gaze mode */
+.edit-colors-window .swatch, /* this outer one is only for detection for the hover halo in eye gaze mode */
+.color-button canvas,
+.color-selection canvas,
+.edit-colors-window .swatch canvas,
+.color-button:after,
+.color-selection:after,
+.edit-colors-window .swatch:after {
+	border-radius: 3px;
+	position: relative;
+}
+.color-button::after,
+.color-selection::after,
+.edit-colors-window .swatch::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5) inset;
+}
+.eye-gaze-mode .colors-component.tall {
+	width: 53px;
+}
+.eye-gaze-mode .colors-component.tall .color-button {
+	margin-left: 1px;
+}
+
+.edit-colors-window .inset-shallow {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+}
+
+.edit-colors-window .swatch {
+	width: 20px;
+	height: 17px;
+}
+.edit-colors-window .swatch:focus::after {
+	outline-offset: 3px;
+}
+
+/* @TODO: modern style (this is copied straight from classic.css) */
+.font-box .toggle:enabled > .icon {
+	-webkit-mask-image: url("../../images/text-tools.png");
+	-webkit-mask-position: calc(-16px * var(--icon-index)) 0;
+	mask-image: url("../../images/text-tools.png");
+	mask-position: calc(-16px * var(--icon-index)) 0;
+	background-color: currentColor;
+}
+.font-box .toggle:disabled > .icon {
+	background-image: url("../../images/text-tools.png");
+	background-position: calc(-16px * var(--icon-index)) 0;
+	filter: saturate(0%) opacity(50%); /* fallback */
+	filter: url("#disabled-inset-filter-2");
+}
+
+/* @TODO: padding/margin on the top at least when in the sidebar */
+.tools {
+	width: 50px;
+}
+.tool {
+	border: 0;
+	background: 0;
+	width: 24px;
+	height: 24px;
+}
+.tool.selected {
+	background: rgba(0, 0, 0, 0.24);
+}
+.toggle.selected {
+	box-shadow: 0px -2px 1px 0px blue;
+}
+.tool-icon,
+.tool-icon.use-svg { /* specificity needed for overriding classic theme; SVG is not supported yet for this theme */
+	background-image: url("../../images/modern/tools.png");
+	background-repeat: no-repeat;
+	background-position: calc(-16px * var(--icon-index)) 0;
+}
+/* .tool-icon.use-svg {
+	background-image: url("../../images/modern/tools.svg");
+	background-position: calc(-16px * (var(--icon-index) * 2 + 1)) -16px;
+} */
+.eye-gaze-mode .tool-icon.use-svg {
+	background-image: url("../../images/classic/tools.svg");
+	background-position: calc(-16px * (var(--icon-index) * 2 + 1)) -16px;
+}
+
+.tool-options {
+	/* the layout currently depends on the exact pixel width (specifically the brush tool options) */
+	border: 1px solid rgba(0, 0, 0, 0.24);
+}
+.magnification-option {
+	/* background-image: url("../../images/options-magnification.png"); */
+	background-image: url("../../images/options-magnification.svg");
+}
+/* .magnification-option.use-svg {
+	background-image: url("../../images/options-magnification.svg");
+} */
+.transparent-mode-option {
+	background-image: url("../../images/modern/options-transparency.png");
+}
+
+.eye-gaze-mode .eye-gaze-mode-undo-button .button-icon {
+	background: url(../../images/classic/undo.svg);
+}
+.eye-gaze-mode .toggle-dwell-clicking .button-icon {
+	background: url(../../images/classic/eye-gaze-pause.svg);
+}
+.eye-gaze-mode.eye-gaze-mode-paused .toggle-dwell-clicking .button-icon {
+	background: url(../../images/classic/eye-gaze-unpause.svg);
+}
+
+.menus,
+.component-area,
+.status-area {
+	background: #fff;
+}
+.status-field {
+	height: 1.5rem;
+	line-height: 1.5rem;
+}
+.status-text {
+	padding-left: 8px;
+}
+
+body,
+.canvas-area {
+	background: #7b7b7b;
+	/*background: #e9e9e9;*/
+}
+.canvas-area {
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+.component-ghost {
+	border-radius: 2px;
+	transition: border-radius .2s ease, border-width .2s ease, opacity .2s ease;
+	outline: 0;
+}
+/* NOTE: copy/pasted from classic.css */
+/* @TODO: actually show a preview of the component itself when dragging for the modern theme */
+/* @TODO: cursor maybe? just when already dragging? */
+.component-ghost.dock {
+	border: 1px solid #2196f3;
+	animation: squish 0.7s ease infinite;
+}
+@keyframes squish {
+	0% {
+		transform: scale(90%, 110%);
+	}
+	50% {
+		transform: scale(110%, 90%);
+	}
+	100% {
+		transform: scale(90%, 110%);
+	}
+}
+.component-ghost:not(.dock) {
+	border: 4px solid #2196f3;
+	opacity: 0.3;
+	animation: bobble 1s ease-in-out infinite;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+@keyframes bobble {
+	0% {
+		transform: scale(95%);
+	}
+	50% {
+		transform: scale(105%);
+	}
+	100% {
+		transform: scale(95%);
+	}
+}
+@media (prefers-reduced-motion) {
+	.component-ghost {
+		animation: none !important;
+	}
+}
+
+.resize-ghost.thick:after,
+.resize-ghost.thick:before {
+	content: '';
+	position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+	outline: 1px dotted #ccc;
+}
+.resize-ghost.thick:after {
+	outline-offset: 1px;
+}
+.resize-ghost.thick:before {
+	outline-offset: 2px;
+}
+
+:root {
+	/* for disabled button icon effect */
+	--ButtonHilight: #fff;
+	--ButtonShadow: #aaa;
+}
+.help-window .resizer {
+	background-color: #aaa !important;
+	border: 0 !important;
+	box-shadow: none !important;
+}
+.help-window .toolbar button {
+	width: 60px;
+	height: 42px;
+	margin-left: 2px;
+	margin-right: 0;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	border-width: 1px; /* or else it's like 17px in Firefox?? and totally screws up the icons */
+}
+.help-window .window-content {
+	padding: 0;
+}
+.help-window iframe {
+	border: 0;
+	/* @TODO ideally, apply a padding: 16px on the body in the iframe, except for on the landing page (which has a background) */
+}
+.help-window ul.contents {
+	padding: 16px;
+	border-right: 1px solid rgba(128, 128, 128, 0.5);
+}
+.help-window .item {
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 12px;
+	padding: 0 2px;
+}
+.help-window .item:hover {
+	text-decoration: underline;
+	color: #1976D2;
+	cursor: pointer;
+}
+.help-window li:before {
+	/* @TODO: more modern icons */
+	background-image: url("../../images/help-icons.png");
+}
+.help-window .item.selected {
+	/* @TODO: separate .help-window .contents.focused .item.selected */
+	background-color: #2196f3;
+	color: white;
+}
+/* ::selection {
+	background-color: #2196f3;
+	color: white;
+} */
+
+.history-view {
+	background: white;
+	color: black;
+}
+
+input:invalid {
+	box-shadow: 0 0 0 2px red;
+}
+.partial-url-label {
+	opacity: 0.6;
+}
+
+input:disabled + label {
+	color: gray;
+}
+
+details {
+	border: 1px solid gray;
+}
+summary {
+	background-color: #dfdfdf;
+	color: black;
+	padding: 3px;
+	padding-left: 7px;
+}
+details[open] > summary {
+	border-bottom: 1px solid gray;
+}
+details,
+summary {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+details:not([open]),
+details:not([open]) > summary {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}

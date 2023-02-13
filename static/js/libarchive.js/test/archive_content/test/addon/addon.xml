@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.addon.adjaranet.client" name="adjaranet client" version="0.0.1" provider-name="You">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.simplejson" />
+    <import addon="script.module.httplib2" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Adjaranet.com client</summary>
+    <description lang="en_GB">enable adjaranet inside kodi</description>
+    <disclaimer lang="en_GB"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+    <news></news>
+    <assets>
+        <icon></icon>
+        <fanart></fanart>
+        <banner></banner>
+        <clearlogo></clearlogo>
+        <screenshot></screenshot>
+    </assets>
+  </extension>
+</addon>

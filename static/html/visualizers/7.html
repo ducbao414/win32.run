@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <style>
+*{ margin: 0px;}
+html, body {
+    background-color: black;
+}
+        </style>
+    </head>
+
+    <!-- CodePen Home
+And we kissed as the sky fell in
+Tom Hinton
+
+https://codepen.io/TomHinton/pen/VwxMvGJ
+-->
+    <body>
+        
+<div id="shader"></div>
+<script id="vertex" type="x-shader/x-vertex">
+  varying vec2 vUv;
+	void main() { gl_Position = vec4(position, 1.0);
+               vUv = uv;
+              }
+</script>
+
+<script id="fragment" type="x-shader/x-fragment">
+precision highp float;
+
+uniform vec2 u_resolution;
+uniform float u_time;
+  varying vec2 vUv;
+ 
+const float PI = 3.1415926535897932384626433832795;
+const float TAU = PI * 2.;
+  
+
+
+
+  
+void main() {
+	vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
+  
+ 
+  
+    float vTime = (u_time * .5) + fract(smoothstep(sin(length(uv-.5) * 20.), .3, .01));
+  
+  
+   float vTime2 = (u_time * .5) + fract(smoothstep(sin(length(uv-.5) * 10.), .3, .01));
+  
+
+ 
+  float a = fract(sin(uv.x * 20.+ sin(vTime)  ))   ;
+  
+  float b = fract(sin(uv.y * 10.+ cos(vTime2)  ))   ;
+	
+	vec3 color = vec3(uv.x, uv.y, 1.);
+  
+  float c= fract(smoothstep(sin(length(uv-.5) * 2. + (sin(vTime * .1) * 20.)), .3, .001));
+  
+  
+  color = mix(vec3(1.), color, a);
+  color = mix(vec3(1., uv.y, c), color, b);
+
+  
+  
+	
+    gl_FragColor = vec4(vec3(color.r, color.g, color.b), 1.);
+}
+</script>
+<script type="module">
+    import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
+    import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls";
+
+let camera, scene, renderer, clock;
+let uniforms;
+
+function init() {
+	const container = document.getElementById("shader");
+
+	clock = new THREE.Clock();
+	camera = new THREE.Camera();
+	camera.position.z = 1;
+
+	scene = new THREE.Scene();
+
+	const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+	uniforms = {
+		u_time: { type: "f", value: 1.0 },
+		u_resolution: { type: "v2", value: new THREE.Vector2() },
+	};
+
+	const material = new THREE.ShaderMaterial({
+		uniforms,
+		vertexShader: document.getElementById("vertex").textContent,
+		fragmentShader: document.getElementById("fragment").textContent
+	});
+
+	const mesh = new THREE.Mesh(geometry, material);
+	scene.add(mesh);
+
+	renderer = new THREE.WebGLRenderer();
+	renderer.setPixelRatio(window.devicePixelRatio);
+
+	container.appendChild(renderer.domElement);
+
+	onWindowResize();
+	window.addEventListener("resize", onWindowResize);
+}
+
+function onWindowResize() {
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	uniforms.u_resolution.value.x = renderer.domElement.width;
+	uniforms.u_resolution.value.y = renderer.domElement.height;
+}
+
+function render() {
+	uniforms.u_time.value = clock.getElapsedTime();
+	renderer.render(scene, camera);
+}
+
+function animate() {
+	render();
+	requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+    </body>
+</html>

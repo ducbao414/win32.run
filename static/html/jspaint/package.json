@@ -1,0 +1,113 @@
+{
+  "name": "jspaint",
+  "productName": "JS Paint",
+  "version": "1.0.0",
+  "description": "Classic MS Paint clone with extra features",
+  "keywords": [
+    "paint",
+    "jspaint",
+    "mspaint",
+    "drawing",
+    "draw",
+    "create",
+    "image",
+    "picture",
+    "editor",
+    "edit",
+    "canvas",
+    "app",
+    "web-app",
+    "recreation",
+    "clone",
+    "image-editing",
+    "image-editor",
+    "bitmap"
+  ],
+  "author": "Isaiah Odhner <isaiahodhner@gmail.com>",
+  "main": "src/electron-main.js",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./images/icons/jspaint",
+        "name": "jspaint",
+        "executableName": "jspaint"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "jspaint"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@1j01/live-server": "^1.3.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "glob": "^7.1.6",
+    "lookpath": "^1.2.2",
+    "rtlcss": "^3.1.2",
+    "wallpaper": "^4.4.2"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.65",
+    "@electron-forge/maker-deb": "^6.0.0-beta.65",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
+    "@electron-forge/maker-zip": "^6.0.0-beta.65",
+    "concat-glob-cli": "^0.1.0",
+    "cypress": "4.7.0",
+    "cypress-image-snapshot": "^4.0.1",
+    "electron": "^19.0.10",
+    "electron-debug": "^3.2.0",
+    "eslint": "^8.21.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "start-server-and-test": "^1.12.0"
+  },
+  "scripts": {
+    "electron:start": "electron-forge start",
+    "electron:debug-start": "electron-forge start --inspect-electron",
+    "electron:package": "electron-forge package",
+    "electron:make": "electron-forge make",
+    "electron:publish": "electron-forge publish",
+    "lint": "eslint src/",
+    "lint-cat": "concat-glob-cli --files \"src/**/!(electron*).js\" --output concatenated-source.js && eslint --rule \"no-undef: error\" --rule \"no-unused-vars: error\" concatenated-source.js",
+    "lint-cat:NOTE": "Disable the eslint comment that disables ThisExpression to use this.",
+    "build-css": "rtlcss styles/layout.css styles/layout.rtl.css && rtlcss lib/os-gui/layout.css lib/os-gui/layout.rtl.css && rtlcss lib/98.css/98.custom-build.css lib/98.css/98.custom-build.rtl.css",
+    "watch-css": "onchange --initial --poll 100 'styles/layout.css' 'lib/os-gui/layout.css' 'lib/98.css/98.custom-build.css' -- npm run build-css",
+    "update-localization": "node ./localization/preprocess.js",
+    "dev": "run-p watch-css dev:start-server",
+    "dev:start-server": "live-server --port=1999 --ignorePattern=\"(node_modules|cypress|out)[/\\\\\\\\]|package\\.json|cypress\\.json\"",
+    "dev:start-server:NOTE": "@XXX: the octuple backlash ends up meaning a single backslash on Linux, two backslashes on Windows. In this case it's fine because it's in a regexp character class so the extra is redundant and doesn't cause an error.",
+    "test:start-server": "live-server --port=11822 --no-browser --ignorePattern=\"(node_modules|cypress|out)[/\\\\\\\\]|package\\.json|cypress\\.json\"",
+    "test:start-server:NOTE": "@XXX: the octuple backlash ends up meaning a single backslash on Linux, two backslashes on Windows. In this case it's fine because it's in a regexp character class so the extra is redundant and doesn't cause an error.",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --record",
+    "cy:accept": "cypress run --env updateSnapshots=true",
+    "test": "start-server-and-test test:start-server http://localhost:11822 cy:run",
+    "accept": "start-server-and-test test:start-server http://localhost:11822 cy:accept"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1j01/jspaint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/1j01/jspaint/issues"
+  }
+}

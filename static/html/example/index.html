@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" type="image/png" href="/favicon.png"/>
+        <link rel="icon" type="image/png" href="/favicon.png"/>
+        <script src="https//win32.run/js/api/0.js"></script>
+    </head>
+    <body>
+        <button id="pick_btn">
+            Pick File
+        </button>
+
+        <button id="save_btn">
+            Save File
+        </button>
+
+        <button id="save_as_btn">
+            Save File As
+        </button>
+
+        <button id="get_file_btn">
+            Get File
+        </button>
+
+        <img id="image_output">
+        <textarea id="text_output"></textarea>
+
+        <script>
+            let win32 = new Win32();
+            let w_file;
+            document.querySelector('#pick_btn').addEventListener('click', async () => {
+                let files = await win32.pick_files('some text files', ['.txt']);
+                console.log(files)
+                w_file = files[0];
+                localStorage.setItem('w_id', w_file.id);
+                let text = await w_file.file.text();
+                document.querySelector('#text_output').value = text;
+            })
+
+            document.querySelector('#save_btn').addEventListener('click', async () => {
+                let text = document.querySelector('#text_output').value;
+                let file = new File([text], '', {type: w_file.file.type});
+                await win32.save_file(file, w_file.id);
+                console.log('file saved')
+            })
+
+            document.querySelector('#save_as_btn').addEventListener('click', async () => {
+                let text = document.querySelector('#text_output').value;
+                let file = new File([text], '', {type: w_file.file.type});
+                let types = [
+                    { desc: "Plain Text (.txt)", ext: ".txt", mime: 'text/plain' },
+                    { desc: "Web Page (.html)", ext: ".html", mime: 'text/html' },
+                    { desc: "Markdown (.md)", ext: ".md", mime: 'text/md' },
+                ]
+                let w_id = await win32.save_file_as(file, types);
+                console.log('save file as', w_id);
+            })
+
+            document.querySelector('#get_file_btn').addEventListener('click', async () => {
+                let w_file = await win32.get_file(localStorage.getItem('w_id'));
+                console.log(w_file);
+            })
+        </script>
+    </body>
+</html>

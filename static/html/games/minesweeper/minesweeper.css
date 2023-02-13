@@ -1,0 +1,169 @@
+html, body {
+  margin:0;
+  overflow: hidden;
+  background-color: #BEBFC0;
+}
+
+* {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;    
+}
+
+#minesweeper-main {
+  width: fit-content;
+}
+
+#game-container {
+  display: inline-block;
+  padding: 15px 15px 1px 15px;
+  background-color: #BEBFC0;
+}
+
+
+.inset {
+  border-top: 3px solid #808080;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
+  border-left: 3px solid #808080;
+}
+
+.outset {
+  border-top: 3px solid white;
+  border-right: 3px solid #808080;
+  border-bottom: 3px solid #808080;
+  border-left: 3px solid white;
+}
+
+.control-panel {
+  /* width set in minesweeper.js:initControlPanel */
+  height: 38px;
+  margin-bottom: 10px;
+}
+
+.reset-button {
+  width: 32px;
+  height: 32px;
+  font-size: 28px;
+  text-align: center;
+  cursor: default;
+  /* margin-left set in minesweeper.js:initControlPanel to center this */
+}
+
+.counter {
+  font-family: sans-serif;
+  font-size: 30px;
+  color: red;
+  background-color: black;
+  padding: 2px 7px 0px 7px;
+  height: 36px;
+  min-width: 51px;
+}
+
+.cell {
+  /* padding: 5px 2px 6px 9px; */
+  padding: 0;
+  font-family: monospace;
+  font-weight: bold;
+  color: #C0C0C0;
+  background-color: #C0C0C0;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  font-size: large;
+}
+
+.cell > div {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+
+.revealed {
+  border-top: 1px solid #828282;
+  border-left: 1px solid #828282;
+  text-align: center;
+}
+
+.cell-X {
+  color: black;
+  background-color: #e64723;
+}
+
+.cell-0 {
+  color: #C2C2C2;
+  background-color: #C2C2C2;
+}
+
+.cell-1 {
+  color: #110CBD; /* blue */
+}
+
+.cell-2 {
+  color: #155F10; /* green */
+}
+
+.cell-3 {
+  color: #BB1419; /* red */
+}
+
+.cell-4 {
+  color: #02126A; /* indigo */
+}
+
+.cell-5 {
+  color: #740E19; /* brown */
+}
+
+.cell-6 {
+  color: #008284; /* teal */
+}
+
+.cell-7 {
+  color: #840185; /* purple */
+}
+
+.cell-8 {
+  color: #757575; /* gray */
+}
+
+.debug {
+  color: #A0A0A0;
+}
+
+.debug-link {
+  color: #BEBFC0;
+  text-decoration: none;
+}
+
+.flagged {
+  color: black;
+  text-align: right;
+}
+
+.no-highlight {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div {
+  /* min-width: 21px; */
+  /* min-height: 21px; */
+}
+
+div.mine {
+  text-align: center;
+}
+
+td:not(.revealed):not(.debug) > div.mine {
+  visibility: hidden;
+}

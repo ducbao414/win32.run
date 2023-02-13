@@ -1,0 +1,45 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="minesweeper.css">
+</head>
+<body>
+  
+  <div id="minesweeper-main">
+    <div id="game-container"></div>
+    
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
+  <script src='minesweeper.js'></script>
+
+  <script>
+    document.body.style.zoom = parent.document.body.style.zoom;
+    window.addEventListener('contextmenu', (event) => {
+				event.preventDefault();
+			})
+    
+    var ms = new Minesweeper('#minesweeper-main');
+    ms.init(ms.SETTINGS.BEGINNER);
+    // ms.init(ms.SETTINGS.EXPERT);
+
+    function new_game(){
+        ms.init(ms.settings);
+    }
+
+    function beginner(){
+        console.log('beginner');
+        ms.init(ms.SETTINGS.BEGINNER);
+    }
+
+    function intermediate(){
+        ms.init(ms.SETTINGS.INTERMEDIATE);
+    }
+
+    function expert(){
+        ms.init(ms.SETTINGS.EXPERT);
+    }
+  </script>
+</body>
+</html>
+
