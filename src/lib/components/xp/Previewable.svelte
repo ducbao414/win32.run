@@ -4,6 +4,7 @@
 
     export let default_icon;
     export let fs_id;
+    export let size = 50;
     let preview_url;
     let node_ref;
 
@@ -36,6 +37,8 @@
 
 </script>
 
-<div bind:this={node_ref} class="w-[50px] h-[50px] shrink-0 bg-contain bg-no-repeat bg-center"
-    style:background-image="{preview_url || default_icon}">
+<div bind:this={node_ref} class="shrink-0 bg-contain bg-no-repeat bg-center"
+    style:background-image="{preview_url || default_icon}"
+    style:width="{size}px"
+    style:height="{size}px">
 </div>

@@ -2,7 +2,7 @@
     import { contextMenu, selectingItems, zIndex, clipboard, hardDrive, clipboard_op, queueProgram } from '../../lib/store'
     
     import * as utils from '../../lib/utils';
-    import { doctypes, icons, desktop_folder } from '../../lib/system';
+    import { doctypes, icons, desktop_folder, previewable_exts } from '../../lib/system';
     import * as fs from '../../lib/fs';
     const {click_outside} = utils;
     import {  onMount, tick } from 'svelte';
@@ -12,6 +12,7 @@
     import DragSelect from 'dragselect';
     import RecycleBin from '../../lib/components/xp/RecycleBin.svelte';
     import { parse_dir } from '../../lib/dir_parser';
+    import Previewable from '../../lib/components/xp/Previewable.svelte';
     
 
     let id = desktop_folder;
@@ -237,11 +238,15 @@
                 style:transform="{item.desktop_css_transform}"
                 style:width="{cell_size}px"
                 style:height="{cell_size}px">
-                <div class="w-[40px] h-[40px] shrink-0 bg-contain bg-no-repeat bg-center
-                    {$clipboard.includes(item.id) && $clipboard_op == 'cut' ? 'opacity-70' : ''}
-                    {item.type == 'folder' ? 'bg-[url(/images/xp/icons/FolderClosed.png)]' : 'bg-[url(/images/xp/icons/Default.png)]'} "
-                    style:background-image="{file_icon(item)}">
-                </div>
+                {#if previewable_exts.includes(item.ext)}
+                    <Previewable size={40} default_icon={file_icon(item)} fs_id={item.id}></Previewable>
+                {:else}
+                    <div class="w-[40px] h-[40px] shrink-0 bg-contain bg-no-repeat bg-center
+                        {$clipboard.includes(item.id) && $clipboard_op == 'cut' ? 'opacity-70' : ''}
+                        {item.type == 'folder' ? 'bg-[url(/images/xp/icons/FolderClosed.png)]' : 'bg-[url(/images/xp/icons/Default.png)]'} "
+                        style:background-image="{file_icon(item)}">
+                    </div>
+                {/if}
                 <p class="px-1 mx-0.5 text-[11px] break-words line-clamp-2 text-ellipsis leading-tight text-center text-white
                     {$selectingItems?.includes(item.id) && is_focus ? 'bg-blue-600 text-slate-50' : ''}"
                     style="text-shadow: 1px 1px 2px black;">

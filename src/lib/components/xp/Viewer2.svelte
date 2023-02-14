@@ -4,7 +4,7 @@
     
     import * as finder from '../../finder';
     import * as utils from '../../utils';
-    import { doctypes, icons, hidden_items } from '../../system';
+    import { doctypes, icons, hidden_items, previewable_exts } from '../../system';
     import * as fs from '../../fs';
     const {click_outside} = utils;
     import { createEventDispatcher, onMount, tick } from 'svelte';
@@ -12,6 +12,7 @@
     import {get, set} from 'idb-keyval';
     import { filter, map } from 'lodash';
     import Button from './Button.svelte';
+    import Previewable from './Previewable.svelte';
     let dispatch = createEventDispatcher();
 
 
@@ -162,10 +163,14 @@
                 {is_desired(item) ? '' : 'opacity-50'}" 
                 on:dblclick={() => open(item.id)}
                 on:click={(e) => on_click(e, item)}>
-                <div class="w-[30px] h-[30px] shrink-0 bg-contain bg-no-repeat
-                {item.type == 'folder' ? 'bg-[url(/images/xp/icons/FolderClosed.png)]' : 'bg-[url(/images/xp/icons/Default.png)]'} "
-                    style:background-image="{file_icon(item)}">
-                </div>
+                {#if previewable_exts.includes(item.ext)}
+                    <Previewable size={30} default_icon={file_icon(item)} fs_id={item.id}></Previewable>
+                {:else}
+                    <div class="w-[30px] h-[30px] shrink-0 bg-contain bg-no-repeat
+                        {item.type == 'folder' ? 'bg-[url(/images/xp/icons/FolderClosed.png)]' : 'bg-[url(/images/xp/icons/Default.png)]'} "
+                        style:background-image="{file_icon(item)}">
+                    </div>
+                {/if}
                 <p class="px-1 text-[11px] break-words line-clamp-2 text-ellipsis leading-tight
                     {selectingItems?.includes(item.id) ? 'bg-blue-600 text-slate-50' : ''}">
                     {item.name}
