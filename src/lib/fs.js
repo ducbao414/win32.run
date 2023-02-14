@@ -43,7 +43,7 @@ export function paste(id, new_id=null){
     }
 
     clipboard_op.set('copy')
-    clipboard.set([]);
+    // clipboard.set([]);
 }
 
 export function del_fs(id){
