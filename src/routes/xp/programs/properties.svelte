@@ -34,7 +34,7 @@
 
         ...fs_item?.type == 'file' ? [] : 
         [
-            ['Contains', `${fs_item.files.length} Files, ${fs_item.folders.length} Folders`]
+            ['Contains', `${fs_item.children.filter(el => $hardDrive[el].type == 'file').length} Files, ${fs_item.children.filter(el => $hardDrive[el].type == 'folder').length} Folders`]
         ]
     ]
 
@@ -64,8 +64,18 @@
     };
 
     function size_cal(id){
-        let total_size = _.sum($hardDrive[id].files.map(el => $hardDrive[el].size));
-        let folders = $hardDrive[id].folders;
+        console.log(id);
+        let total_size = _.sum(
+            $hardDrive[id]
+            .children
+            .map(el => $hardDrive[el])
+            .filter(el => el.type == 'file')
+            .map(el => el.size)
+        );
+        
+        let folders = $hardDrive[id]
+            .children
+            .filter(el => $hardDrive[el].type == 'folder');
         for(let folder of folders){
             total_size += size_cal(folder);
         }

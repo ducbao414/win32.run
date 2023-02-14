@@ -101,7 +101,7 @@
     function next_image(curr_item){
         console.log($hardDrive[curr_item.parent])
         let siblings = $hardDrive[curr_item.parent]
-            .files
+            .children
             .filter(id => supported_exts.includes($hardDrive[id].ext));
         let curr_index = siblings.indexOf(curr_item.id);
 
@@ -114,7 +114,7 @@
 
     function previous_image(curr_item){
         let siblings = $hardDrive[curr_item.parent]
-            .files
+            .children
             .filter(id => supported_exts.includes($hardDrive[id].ext));
         let curr_index = siblings.indexOf(curr_item.id);
 

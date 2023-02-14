@@ -7,7 +7,7 @@
     import { runningPrograms, hardDrive } from '../../../lib/store';
     import {icons} from '../../../lib/system';
     import * as utils from '../../../lib/utils';
-    import _, { isEqual } from 'lodash';
+    import _, { isEqual, map } from 'lodash';
     import * as finder from '../../../lib/finder';
 
     export let id;
@@ -56,8 +56,18 @@
     };
 
     function size_cal(id){
-        let total_size = _.sum($hardDrive[id].files.map(el => $hardDrive[el].size));
-        let folders = $hardDrive[id].folders;
+        let total_size = _.sum(
+            $hardDrive[id]
+            .children
+            .map(el => $hardDrive[el])
+            .filter(el => el.type == 'file')
+            .map(el => el.size)
+        );
+
+        let folders = $hardDrive[id]
+            .children
+            .filter(el => $hardDrive[el].type == 'folder');
+
         for(let folder of folders){
             total_size += size_cal(folder);
         }

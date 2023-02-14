@@ -14,7 +14,9 @@
     export let exec_path;
 
     let preview = $wallpaper;
-    let wallpapers = $hardDrive[wallpapers_folder].files;
+    let wallpapers = $hardDrive[wallpapers_folder]
+    .children
+    .filter(el => $hardDrive[el].type == 'file');
 
     onMount(() => {
     })

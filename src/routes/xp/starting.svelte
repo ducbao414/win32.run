@@ -53,7 +53,6 @@
 
     async function load_hard_drive(){
         let hard_drive = await get('hard_drive');
-        console.log(hard_drive);
         if(hard_drive == null){
             hard_drive = (await axios({
                 method: 'get',
@@ -61,7 +60,20 @@
             })).data;
             await set('hard_drive', hard_drive);
         }
+        migrate_files_format(hard_drive);
+        console.log(hard_drive);
         hardDrive.set(hard_drive);
+    }
+
+    function migrate_files_format(drive){
+        for(let key of Object.keys(drive)){
+            let obj = drive[key];
+            if(obj.children == null){
+                obj.children = [...obj.files, ...obj.folders];
+                delete obj.files;
+                delete obj.folders;
+            }
+        }
     }
 
     async function load_wallpaper(){

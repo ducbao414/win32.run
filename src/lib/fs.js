@@ -54,15 +54,13 @@ export function del_fs(id){
     let obj = get(hardDrive)[id];
 
     let child_ids = [
-        ...obj.files,
-        ...obj.folders
+        ...obj.children
     ]
     if(get(hardDrive)[obj.parent] != null){
         console.log('delete from parent', obj.parent)
         
         hardDrive.update(data => {
-            data[obj.parent].files = data[obj.parent].files.filter(el => el != obj.id);
-            data[obj.parent].folders = data[obj.parent].folders.filter(el => el != obj.id);
+            data[obj.parent].children = data[obj.parent].children.filter(el => el != obj.id);
             return data;
         })
     }
@@ -89,8 +87,7 @@ export function clone_fs(obj_current_id, parent_id, new_id=null){
     obj.parent = parent_id;
 
     let parent_items_names = [
-        ...get(hardDrive)[parent_id].files.map(el => get(hardDrive)[el].name),
-        ...get(hardDrive)[parent_id].folders.map(el => get(hardDrive)[el].name),
+        ...get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el].name),
     ]
     let appendix = 2;
     let basename = obj.basename;
@@ -101,12 +98,10 @@ export function clone_fs(obj_current_id, parent_id, new_id=null){
     obj.basename = basename;
     obj.name = basename + obj.ext;
     
-    //backup files & folders
+    //backup children
     console.log(obj)
-    let files = [...obj.files];
-    let folders = [...obj.folders];
-    obj.files = [];
-    obj.folders = [];
+    let children = [...obj.children];
+    obj.children = [];
 
     //save to hard drive
     hardDrive.update(data => {
@@ -115,21 +110,13 @@ export function clone_fs(obj_current_id, parent_id, new_id=null){
     })
     console.log('cloning', obj.id)
 
-    if(obj.type == 'file'){
-       
-        hardDrive.update(data => {
-            data[parent_id].files.push(obj.id);
-            return data;
-        })
-    } else if(obj.type == 'folder'){
-        hardDrive.update(data => {
-            data[parent_id].folders.push(obj.id);
-            return data;
-        })
-    }
+    hardDrive.update(data => {
+        data[parent_id].children.push(obj.id);
+        return data;
+    })
 
     //recursively clone child items
-    for(let child of [...files, ...folders]){
+    for(let child of [...children]){
         clone_fs(child, obj.id);
     }
 }
@@ -151,17 +138,14 @@ export async function new_fs_item(type, ext, seedname, parent_id, file=null){
         "level": 0,
         "parent": parent_id,
         "size": 1,
-        "files": [],
-        "folders": [],
+        "children": [],
         "basename": ""
     }
 
-    let files = get(hardDrive)[parent_id].files.map(el => get(hardDrive)[el]);
-    let folders = get(hardDrive)[parent_id].folders.map(el => get(hardDrive)[el]);
+    let children = get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el]);
 
     let parent_items_names = [
-        ...files.map(el => el.name),
-        ...folders.map(el => el.name)
+        ...children.map(el => el.name)
     ]
 
     let appendix = 2;
@@ -193,17 +177,10 @@ export async function new_fs_item(type, ext, seedname, parent_id, file=null){
         data[item.id] = item;
         return data;
     })
-    if(type == 'file'){
-        hardDrive.update(data => {
-            data[parent_id].files.push(item.id);
-            return data;
-        })
-    } else if (type == 'folder'){
-        hardDrive.update(data => {
-            data[parent_id].folders.push(item.id);
-            return data;
-        })
-    }
+    hardDrive.update(data => {
+        data[parent_id].children.push(item.id);
+        return data;
+    })
 
     return item.id;
 }
@@ -227,19 +204,14 @@ export async function new_fs_item_raw(item, parent_id){
     if(item.icon == null){
         item.icon = '/images/xp/icons/ApplicationWindow.png'
     }
-    if(item.files == null){
-        item.files = [];
-    }
-    if(item.folders == null){
-        item.folders = [];
+    if(item.children == null){
+        item.children = [];
     }
     
-    let files = get(hardDrive)[parent_id].files.map(el => get(hardDrive)[el]);
-    let folders = get(hardDrive)[parent_id].folders.map(el => get(hardDrive)[el]);
+    let children = get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el]);
 
     let parent_items_names = [
-        ...files.map(el => el.name),
-        ...folders.map(el => el.name)
+        ...children.map(el => el.name)
     ]
 
     let appendix = 2;
@@ -266,17 +238,10 @@ export async function new_fs_item_raw(item, parent_id){
         data[item.id] = item;
         return data;
     })
-    if(item.type == 'file'){
-        hardDrive.update(data => {
-            data[parent_id].files.push(item.id);
-            return data;
-        })
-    } else if (item.type == 'folder'){
-        hardDrive.update(data => {
-            data[parent_id].folders.push(item.id);
-            return data;
-        })
-    }
+    hardDrive.update(data => {
+        data[parent_id].children.push(item.id);
+        return data;
+    })
 
     return item.id;
 }
@@ -323,14 +288,12 @@ export async function save_file_as(basename, ext, file, parent_id, new_id=null){
         "level": 0,
         "parent": parent_id,
         "size": Math.round(file.size/1024),
-        "files": [],
-        "folders": [],
+        "children": [],
         "basename": basename
     }
 
     let parent_items_names = [
-        ...get(hardDrive)[parent_id].files.map(el => get(hardDrive)[el].name),
-        ...get(hardDrive)[parent_id].folders.map(el => get(hardDrive)[el].name),
+        ...get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el].name)
     ]
     let appendix = 2;
     basename = obj.basename;
@@ -344,7 +307,7 @@ export async function save_file_as(basename, ext, file, parent_id, new_id=null){
 
     hardDrive.update(data => {
         data[obj.id] = obj;
-        data[parent_id].files.push(obj.id);
+        data[parent_id].children.push(obj.id);
         return data;
     })
 }

@@ -20,10 +20,11 @@
     $: url = finder.to_url(history[page_index]) || 'My Computer';
     export let id;
 
-    $: folders = $hardDrive[id] == null ? [] : $hardDrive[id].folders.map(id => $hardDrive[id]);
-    $: files = $hardDrive[id] == null ? [] : $hardDrive[id].files.map(id => $hardDrive[id]);
-
-    $: items = [...files, ...folders]
+    $: items =  $hardDrive[id] == null ? 
+        [] : 
+        $hardDrive[id]
+        .children
+        .map(id => $hardDrive[id])
         .filter(el => el != null)
         .filter(el => !hidden_items.includes(el.id));
 

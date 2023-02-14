@@ -15,10 +15,14 @@
     
 
     let id = desktop_folder;
-    $: folders = $hardDrive[id] == null ? [] : $hardDrive[id].folders.map(id => $hardDrive[id]);
-    $: files = $hardDrive[id] == null ? [] : $hardDrive[id].files.map(id => $hardDrive[id]);
     
-    $: items =  [...files, ...folders].filter(el => el != null);
+    $: items =  $hardDrive[id] == null ? 
+        [] : 
+        $hardDrive[id]
+        .children
+        .map(id => $hardDrive[id])
+        .filter(el => el != null);
+
     let is_focus = true;
     let node_ref;
     let cell_size = 80;
@@ -152,8 +156,7 @@
         }
         
         let parent_items_names = [
-            ...$hardDrive[item.parent].files.filter(el => el != item.id).map(el => $hardDrive[el].name),
-            ...$hardDrive[item.parent].folders.filter(el => el != item.id).map(el => $hardDrive[el].name),
+            ...$hardDrive[item.parent].children.filter(el => el != item.id).map(el => $hardDrive[el].name),
         ]
         let appendix = 2;
         while(parent_items_names.includes(basename + item.ext)){

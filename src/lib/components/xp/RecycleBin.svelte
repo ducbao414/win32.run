@@ -4,7 +4,7 @@
     export let style;
     export let classes;
 
-    $: icon = $hardDrive[recycle_bin_id]?.files.length > 0 || $hardDrive[recycle_bin_id]?.folders.length > 0 ? 
+    $: icon = $hardDrive[recycle_bin_id]?.children.length > 0 || $hardDrive[recycle_bin_id]?.children.length > 0 ? 
     'url(/images/xp/icons/RecycleBinfull.png)' : 'url(/images/xp/icons/RecycleBinempty.png)';
 
     function on_dbclick(){

@@ -45,8 +45,7 @@ export function to_id_nocase(url){
         console.log(i);
         console.log(path_components[i]);
         current_location = [
-            ...current_location.files.map(id => get(hardDrive)[id]), 
-            ...current_location.folders.map(id => get(hardDrive)[id])
+            ...current_location.children.map(id => get(hardDrive)[id])
         ]
         .find(item => item?.name?.toLowerCase() == path_components[i].toLowerCase());
         console.log(current_location);
@@ -76,8 +75,7 @@ export function to_id(url){
         console.log(i);
         console.log(path_components[i]);
         current_location = [
-            ...current_location.files.map(id => get(hardDrive)[id]), 
-            ...current_location.folders.map(id => get(hardDrive)[id])
+            ...current_location.children.map(id => get(hardDrive)[id])
         ]
         .find(item => item?.name == path_components[i]);
         console.log(current_location);

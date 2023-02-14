@@ -18,10 +18,12 @@
     export let self;
     export let my_computer_instance;
     export let id = null;
-    $: folders = $hardDrive[id] == null ? [] : $hardDrive[id].folders.map(id => $hardDrive[id]);
-    $: files = $hardDrive[id] == null ? [] : $hardDrive[id].files.map(id => $hardDrive[id]);
-
-    $: items = [...files, ...folders]
+    
+    $: items =  $hardDrive[id] == null ? 
+        [] : 
+        $hardDrive[id]
+        .children
+        .map(id => $hardDrive[id])
         .filter(el => el != null)
         .filter(el => !hidden_items.includes(el.id));
 
@@ -155,8 +157,7 @@
         }
         
         let parent_items_names = [
-            ...$hardDrive[item.parent].files.filter(el => el != item.id).map(el => $hardDrive[el].name),
-            ...$hardDrive[item.parent].folders.filter(el => el != item.id).map(el => $hardDrive[el].name),
+            ...$hardDrive[item.parent].children.filter(el => el != item.id).map(el => $hardDrive[el].name),
         ]
         let appendix = 2;
         while(parent_items_names.includes(basename + item.ext)){

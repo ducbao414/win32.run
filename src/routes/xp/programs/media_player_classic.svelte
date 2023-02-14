@@ -206,12 +206,12 @@
     async function find_subtitle(item){
         try {
             let vtt = $hardDrive[item.parent]
-            .files
+            .children
             .map(id => $hardDrive[id])
             .find(el => el.basename == item.basename && el.ext == '.vtt');
 
             let srt = $hardDrive[item.parent]
-            .files
+            .children
             .map(id => $hardDrive[id])
             .find(el => el.basename == item.basename && el.ext == '.srt');
             

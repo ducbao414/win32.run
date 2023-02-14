@@ -29,9 +29,8 @@ export let make = ({type, originator}) => {
                     name: 'Empty Recycle Bin', 
                     action: () => {
                         let yes_action = () => {
-                            let files = get(hardDrive)[recycle_bin_id].files;
-                            let folders = get(hardDrive)[recycle_bin_id].folders;
-                            for(let id of [...files, ...folders]){
+                            let children = get(hardDrive)[recycle_bin_id].children;
+                            for(let id of [...children]){
                                 fs.del_fs(id);
                             }
                         }

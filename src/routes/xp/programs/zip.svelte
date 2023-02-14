@@ -61,7 +61,7 @@
         if(cancelled) return;
         if(item.type == 'folder'){
             let folder = parent.folder(item.name);
-            for(let child_item of [...item.folders, ...item.files]){
+            for(let child_item of [...item.children]){
                 child_item = $hardDrive[child_item];
                 await add_to_archive(folder, child_item);
             }
