@@ -75,7 +75,27 @@ export function del_fs(id){
     }
 }
 
+function dir_contains_dir(a, b){
+    if(a == null || b == null) return false;
+    if(get(hardDrive)[a] == null) return false;
+    if(get(hardDrive)[b] == null) return false;
+    if(a == b) return true;
+    
+    let paths = [];
+    while(get(hardDrive)[b].parent != null){
+        let parent = get(hardDrive)[b].parent;
+        paths.push(parent);
+        b = parent;
+    }
+    return paths.includes(a);
+
+}
 export function clone_fs(obj_current_id, parent_id, new_id=null){
+    if(dir_contains_dir(obj_current_id, parent_id)){
+        console.log('cannot paste item onto itself');
+        return;
+    }
+
     let obj = {...get(hardDrive)[obj_current_id]};
 
     if(new_id == null){
