@@ -3,7 +3,7 @@
     import { onMount, createEventDispatcher } from 'svelte';
     import {set, get} from 'idb-keyval';
     import axios from 'axios';
-    import { hardDrive, wallpaper } from '../../lib/store';
+    import { hardDrive, wallpaper, contextMenu } from '../../lib/store';
     import { bliss_wallpaper, wallpapers_folder } from '../../lib/system';
     let dispatcher = createEventDispatcher();
 
@@ -42,6 +42,8 @@
         } while (!assets_loaded);
         
         preload_iframes();
+        preload_context_menus();
+        console.log('after preload_context_menu');
 
         if(utils.is_installing_windows()){
             dispatcher('load_page', {url: './installation/95/installing.svelte'});
@@ -104,6 +106,13 @@
                 e.target.remove();
             };
             parent.appendChild(iframe);
+        }
+    }
+
+    function preload_context_menus(){
+        let types = ['ProgramTile', 'Desktop', 'FSVoid', 'FSItem', 'RecycleBin'];
+        for(let type of types){
+            contextMenu.set({x: -1000, y: -1000, type, originator: {}});
         }
     }
 

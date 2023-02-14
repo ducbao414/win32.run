@@ -29,12 +29,18 @@
 
         } else if(type == 'Desktop'){
             menu_obj = (await import('./context_menu/CMDesktop')).make({type, originator});
+
         } else if(type == 'FSItem'){
             menu_obj = (await import('./context_menu/CMFSItem')).make({type, originator});
+
         } else if(type == 'FSVoid'){
             menu_obj = (await import('./context_menu/CMFSVoid')).make({type, originator});
+
         } else if(type == 'RecycleBin'){
             menu_obj = (await import('./context_menu/RecycleBin')).make({type, originator});
+            
+        } else {
+            console.log('unknown context menu type')
         }
 
         menu = menu_obj.menu;
