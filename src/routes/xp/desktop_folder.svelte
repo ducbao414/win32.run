@@ -8,7 +8,7 @@
     import {  onMount, tick } from 'svelte';
     import short from 'short-uuid';
     import {get, set} from 'idb-keyval';
-    import { filter, map } from 'lodash';
+    import { filter, map, transform } from 'lodash';
     import DragSelect from 'dragselect';
     import RecycleBin from '../../lib/components/xp/RecycleBin.svelte';
     import { parse_dir } from '../../lib/dir_parser';
@@ -27,14 +27,22 @@
 
     const ds = new DragSelect({
         customStyles: false,
-        draggability: false
+        draggability: true
     });
 
     ds.subscribe('callback', (e) => {
-       $selectingItems = e.items
+        for(let node of e.items){
+            let fs_id = node.getAttribute('fs-id');
+            if(fs_id == null) continue;
+            if($hardDrive[fs_id] == null) continue;
+            if(utils.is_empty(node.style.transform)) continue;
+
+            $hardDrive[fs_id]['desktop_css_transform'] = node.style.transform;
+        }
+        $selectingItems = e.items
         .map(el => el.getAttribute('fs-id'))
         .filter(el => $hardDrive[el] != null);
-       console.log($selectingItems.map(el => $hardDrive[el]));
+        console.log($selectingItems.map(el => $hardDrive[el]));
     });
     const observer = new MutationObserver(mutations => {
         ds.setSettings({
@@ -223,7 +231,7 @@
 
             <div fs-id="{item.id}" class="relative fs-item w-[150px] flex-shrink-0 flex-grow-0 overflow-hidden m-2 inline-flex flex-col items-center font-MSSS" 
                 on:dblclick={() => open(item.id)} on:contextmenu={(e) => on_rightclick(e, item)}
-                
+                style:transform="{item.desktop_css_transform}"
                 style:width="{cell_size}px"
                 style:height="{cell_size}px">
                 <div class="w-[40px] h-[40px] shrink-0 bg-contain bg-no-repeat bg-center
