@@ -8,4 +8,7 @@ win32.run runs purely on the client-side (the user's browser). All files are pro
 
 Files (and Folders) in win32.run are stored locally in IndexedDB. Apps (and 3rd-party apps) can interact with files through win32.run homemade file picker and saver dialog (with Windows XP appearance).
 
-![](https://win32.run/video/win32_2x.mp4)
+https://user-images.githubusercontent.com/5462728/218692809-76f54f06-a750-46f9-9a28-ed39fa6f6ef5.mp4
+
+# Documentation
+Please visit [win32 Docs](https://docs.win32.run)
