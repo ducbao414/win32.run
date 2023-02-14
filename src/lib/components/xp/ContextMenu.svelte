@@ -38,7 +38,7 @@
 
         } else if(type == 'RecycleBin'){
             menu_obj = (await import('./context_menu/RecycleBin')).make({type, originator});
-            
+
         } else {
             console.log('unknown context menu type')
         }

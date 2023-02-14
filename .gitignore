@@ -9,3 +9,5 @@ node_modules
 !.env.example
 .vscode/
 build.zip
+win32_rsa
+win32_rsa.pub

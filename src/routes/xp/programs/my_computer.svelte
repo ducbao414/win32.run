@@ -224,7 +224,7 @@
         page_index = Math.min(history.length - 1, page_index + 1);
     }
 
-    function up(){
+    export function up(){
         let parent_id = $hardDrive[history[page_index]].parent;
         open(parent_id);
     }

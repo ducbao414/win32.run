@@ -172,11 +172,11 @@
     }
 
     function on_keydown(e){
-        console.log('keyevent in my computer');
+        
         if(my_computer_instance.window.z_index != $zIndex) return;
         if(renaming) return;
         if(id == null) return;
-        console.log('not skip');
+        console.log('keyevent in my computer');
 
         if(!(e.ctrlKey || e.metaKey)) return;
         if(e.key == 'c'){
@@ -188,6 +188,10 @@
         } else if(e.key == 'a'){
             let els = node_ref.querySelectorAll('.fs-item');
             ds.setSelection(els, true);
+        } else if(e.key == 'ArrowUp'){
+            e.preventDefault();
+            my_computer_instance.up();
+
         }
     }
 
