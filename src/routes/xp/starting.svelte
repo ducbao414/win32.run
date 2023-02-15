@@ -4,7 +4,7 @@
     import {set, get} from 'idb-keyval';
     import axios from 'axios';
     import { hardDrive, wallpaper, contextMenu } from '../../lib/store';
-    import { bliss_wallpaper, wallpapers_folder, SortOptions, SortOptionOrders } from '../../lib/system';
+    import { bliss_wallpaper, wallpapers_folder, SortOptions, SortOrders } from '../../lib/system';
     let dispatcher = createEventDispatcher();
 
     let assets_loaded = false;
@@ -85,8 +85,8 @@
             if(obj.sort_option == null){
                 obj.sort_option = SortOptions.NONE;
             }
-            if(obj.sort_option_order == null){
-                obj.sort_option_order = SortOptionOrders.ASCENDING;
+            if(obj.sort_order == null){
+                obj.sort_order = SortOrders.ASCENDING;
             }
         }
     }

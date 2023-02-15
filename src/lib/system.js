@@ -82,7 +82,7 @@ export let SortOptions = Object.freeze({
   DATE_MODIFIED: 4,
 })
 
-export let SortOptionOrders = Object.freeze({
+export let SortOrders = Object.freeze({
   ASCENDING: 0,
   DESCENDING: 1
 })

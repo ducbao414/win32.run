@@ -103,8 +103,9 @@
                 <!-- submenu items -->
                     <div class="absolute {left > screenWidth - 2*required_width ? '-left-full' : 'left-full'} 
                         py-0.5 hidden group-hover:flex flex-col w-[180px] bg-slate-50 border-slate-200 border-2"
-                        style:top="{top > screenHeight - 2*required_height ? `-${(item.items.length-1)*100}%` : '0'}  ">
+                        style:top="{top > screenHeight - 2*required_height ? `-${(item.items.length-2)*100}%` : '0'}  ">
                         {#each item.items as item}
+                            {#if item}
                             <div class="py-1 w-full flex flex-row items-center {item.disabled ? '' : 'hover:bg-blue-600'} relative group-sub 
                                 {item.disabled ? 'pointer-events-none' : ''}" 
                                 on:click={() => {
@@ -113,9 +114,12 @@
                                         item.action();
                                     }
                                 }}>
-                                <div class="w-[20px] ml-1 shrink-0">
+                                <div class="w-[20px] ml-1 shrink-0 flex items-center justify-center">
                                     {#if item.icon}
                                         <img src="{item.icon}" width="17px" height="17px">
+                                    {:else if item.check}
+                                        <svg class="fill-slate-800 w-1.5 h-1.5 group-sub-hover:fill-slate-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z"/>
+                                        </svg>
                                     {/if}
                                 </div>
                                 <div class="grow {item.font == 'bold' ? 'font-bold' : ''} {item.disabled ? 'text-slate-400' : 'group-sub-hover:text-slate-50'}">
@@ -124,6 +128,9 @@
                                 <div class="w-[10px]">
                                 </div>
                             </div>
+                            {:else}
+                            <div class="h-0.5 bg-slate-200 mx-1"></div>   
+                            {/if}
                         {/each}
                     </div>
                 {/if}
