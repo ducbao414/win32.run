@@ -74,6 +74,19 @@ export let default_wallpapers = [
 ];
 
 
+export let SortOptions = Object.freeze({
+  NONE: 0,
+  NAME: 1,
+  SIZE: 2,
+  DATE_CREATED: 3,
+  DATE_MODIFIED: 4,
+})
+
+export let SortOptionOrders = Object.freeze({
+  ASCENDING: 0,
+  DESCENDING: 1
+})
+
 export let my_music_id = 'tjhEdnks6c4wPBWcqyoWQz';
 export let my_pictures_id = 'neRHxqN8SPnG1xrivxXxRq';
 

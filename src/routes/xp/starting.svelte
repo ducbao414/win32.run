@@ -4,7 +4,7 @@
     import {set, get} from 'idb-keyval';
     import axios from 'axios';
     import { hardDrive, wallpaper, contextMenu } from '../../lib/store';
-    import { bliss_wallpaper, wallpapers_folder } from '../../lib/system';
+    import { bliss_wallpaper, wallpapers_folder, SortOptions, SortOptionOrders } from '../../lib/system';
     let dispatcher = createEventDispatcher();
 
     let assets_loaded = false;
@@ -68,12 +68,25 @@
     }
 
     function migrate_files_format(drive){
+        let now = (new Date()).getTime();
         for(let key of Object.keys(drive)){
             let obj = drive[key];
             if(obj.children == null){
                 obj.children = [...obj.files, ...obj.folders];
                 delete obj.files;
                 delete obj.folders;
+            }
+            if(obj.date_created == null){
+                obj.date_created = now;
+            }
+            if(obj.date_modified == null){
+                obj.date_modified = now;
+            }
+            if(obj.sort_option == null){
+                obj.sort_option = SortOptions.NONE;
+            }
+            if(obj.sort_option_order == null){
+                obj.sort_option_order = SortOptionOrders.ASCENDING;
             }
         }
     }

@@ -61,6 +61,7 @@ export function del_fs(id){
         
         hardDrive.update(data => {
             data[obj.parent].children = data[obj.parent].children.filter(el => el != obj.id);
+            data[obj.parent].date_modified = (new Date()).getTime();
             return data;
         })
     }
@@ -132,6 +133,7 @@ export function clone_fs(obj_current_id, parent_id, new_id=null){
 
     hardDrive.update(data => {
         data[parent_id].children.push(obj.id);
+        data[parent_id].date_modified = (new Date()).getTime();
         return data;
     })
 
@@ -147,6 +149,7 @@ export async function new_fs_item(type, ext, seedname, parent_id, file=null){
         return;
     }
 
+    let now = (new Date()).getTime();
     let item = {
         "id": short.generate(),
         "type": type,
@@ -159,7 +162,9 @@ export async function new_fs_item(type, ext, seedname, parent_id, file=null){
         "parent": parent_id,
         "size": 1,
         "children": [],
-        "basename": ""
+        "basename": "",
+        date_created: now,
+        date_modified: now
     }
 
     let children = get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el]);
@@ -199,6 +204,7 @@ export async function new_fs_item(type, ext, seedname, parent_id, file=null){
     })
     hardDrive.update(data => {
         data[parent_id].children.push(item.id);
+        data[parent_id].date_modified = now;
         return data;
     })
 
@@ -227,6 +233,9 @@ export async function new_fs_item_raw(item, parent_id){
     if(item.children == null){
         item.children = [];
     }
+    let now = (new Date()).getTime();
+    item.date_created = now;
+    item.date_modified = now;
     
     let children = get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el]);
 
@@ -260,6 +269,7 @@ export async function new_fs_item_raw(item, parent_id){
     })
     hardDrive.update(data => {
         data[parent_id].children.push(item.id);
+        data[parent_id].date_modified = now;
         return data;
     })
 
