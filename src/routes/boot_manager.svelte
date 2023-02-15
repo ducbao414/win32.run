@@ -83,8 +83,8 @@
             <div>
                 <div class="ml-8 p-2 inline-block {index == current_option ? 'text-slate-900 bg-slate-200' : 'text-slate-300'}"
                     on:click={() => {
-                        current_option = index;
-                        boot();
+                        //current_option = index;
+                        //boot();
                     }}>
                     {option}
                 </div>
