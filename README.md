@@ -1,5 +1,8 @@
 # Introduction
-https://user-images.githubusercontent.com/5462728/218692809-76f54f06-a750-46f9-9a28-ed39fa6f6ef5.mp4
+
+
+https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b162-e2817c0f9db8.mp4
+
 
 Yet another Windows XP in the browser, but with a File System and comes with it, Programs.
 
@@ -10,6 +13,8 @@ win32.run runs solely on the client-side (the user's browser). All files are pro
 Files (and Folders) in win32.run are stored locally in IndexedDB. Apps (and 3rd-party apps) can interact with files through win32.run homemade file picker and saver dialog (with Windows XP appearance).
 # Run, build & deploy
 I deploy it on a $5 Vultr instance, so there's no special hardware and dependencies requirement here, except Node.js (and NPM).
+
+The project is built with [Svelte](https://github.com/sveltejs/svelte), which may not be great at backward-compatibity at its current phase.  You probably don't want to update Svelte and SvelteKit to newer versions to keep things working.
 ## Install dependencies
 Clone or download from Github
 ```shell
