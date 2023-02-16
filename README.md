@@ -1,5 +1,5 @@
 ### Yet another Windows XP in the browser, with a File System, programs, custom file picker and saver dialogs, 3rd-party program, etc.
-### [🍭 win32.run](https://win32.run)
+## [🍭 win32.run](https://win32.run)
 
 ![License MIT](https://badgen.net/badge/license/MIT/green)
 [![css tailwind](https://badgen.net/badge/css/tailwind/blue)](https://github.com/tailwindlabs/tailwindcss)
@@ -10,13 +10,13 @@ https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b
 *Microsoft and Windows XP trademarks & logos definitely belong to Microsoft Corporation. All the programs' names and logos (Foxit, Word, WinRar, Internet Explorer, etc.) are of their rightful copyright holders. **win32.run** is purely for the **purpose of nostalgia**. I have no intent and no right to monetize  **win32.run**, but you may occasionally see ads when playing third-party games.*
 
 # Introduction
-### 🦄 It's for nostalgia's sake!
+## 🦄 It's for nostalgia's sake!
 
 **WIN32.RUN** runs solely on the client-side (the user's browser). All files are processed right in the user's browser. There is no file uploading, no server-side processing (cause I'm broke, can't afford it). Each user has his own OS session (just like the good old Windows XP)
 
 Files (and Folders) in win32.run are stored locally in IndexedDB. Apps (and 3rd-party apps) can interact with files through win32.run homemade file picker and saver dialog (with Windows XP appearance).
-# Built with
-🔥 WIN32.RUN is built with [Svelte](https://github.com/sveltejs/svelte)/[SvelteKit](https://github.com/sveltejs/kit) and [Tailwindcss](https://github.com/tailwindlabs/tailwindcss).
+## 🔥 Built with
+WIN32.RUN is built with [Svelte](https://github.com/sveltejs/svelte)/[SvelteKit](https://github.com/sveltejs/kit) and [Tailwindcss](https://github.com/tailwindlabs/tailwindcss).
 If you come from a React or Vue background, Svelte is really easy to work with. It doesn't have much boilerplate. 
 
 Writing webapps in Svelte is just like writing vanilla JS, with ```div``` tag for UI and ```script``` tag for logic. One can pick it up in under an hour.
