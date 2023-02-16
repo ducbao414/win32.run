@@ -41,7 +41,7 @@
 
 </script>
 
-<div class="w-screen h-screen bg-[rgb(2,7,176)] overflow-hidden font-Levi">
+<div class="absolute inset-0 bg-[rgb(2,7,176)] overflow-hidden font-Levi">
     <div class=" mt-4 text-xl font-bold text-slate-400 inline-block">
         <p class="px-2">Windows XP Professional Setup</p>
         <div class="w-full h-[1px] mb-1 bg-slate-400"></div>
@@ -53,7 +53,7 @@
         
         <p class="mt-4 text-center">On 10237 MB Disk 0 at Id 0 on bus 0 on atapi [MBR]</p>
 
-        <div class="absolute bottom-[100px] left-0 right-0">
+        <div class="absolute bottom-[150px] left-0 right-0">
             <div class="border-double border-4 border-slate-400 mx-auto max-w-[700px]">
                 <p class="text-slate-400 ml-4 my-2">Setup is formatting...</p>
                 <p class="my-2 text-center">{progress}%</p>

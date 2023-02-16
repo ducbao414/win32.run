@@ -39,7 +39,7 @@
 
 </script>
 
-<div class="w-screen h-screen bg-[rgb(2,7,176)] overflow-hidden font-Levi">
+<div class="absolute inset-0 bg-[rgb(2,7,176)] overflow-hidden font-Levi">
     <div class=" mt-4 text-xl font-bold text-slate-400 inline-block">
         <p class="px-2">Windows XP Licensing Agreement</p>
         <div class="w-full h-[1px] mb-1 bg-slate-400"></div>

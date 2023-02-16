@@ -10,10 +10,10 @@
 
     export let options = {
         title: 'Windows XP Professional Setup',
-        min_width: 680,
-        min_height: 470,
-        width:700,
-        height: 470,
+        min_width: 600,
+        min_height: 400,
+        width:600,
+        height: 400,
         minimize_btn_disabled: true,
         maximize_btn_disabled: true,
         close_btn_disabled: true
@@ -37,7 +37,7 @@
                 <img src="/images/95/0.png" width="50" alt="">
             </div>
         </div>
-        <div class="p-8 shadow flex">
+        <div class="p-4 shadow flex">
             <div class="bg-black shrink-0">
                 <div class="p-2 h-full w-full bg-yellow-500 rounded-md text-sm text-black">
                     <p>
@@ -56,13 +56,13 @@
                 <p class="mt-4">Type the Product Key below:</p>
             </div>
         </div>
-        <div class="p-8 py-8 shadow-sm grow">
+        <div class="p-2 py-4 shadow-sm grow">
             <p class="mb-2 text-black text-sm">Product Key:</p>
             {#each [0,1,2,3,4] as index}
             <input style="background-color: #fff;
             box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
             box-sizing: border-box;
-            padding: 3px 4px;" type="text" class="h-6 w-24 text-center focus:outline-none text-black font-bold uppercase" maxlength="5" id="product_key_part_{index}"
+            padding: 3px 4px;" type="text" class="h-6 w-[85px] text-center focus:outline-none text-black font-bold uppercase" maxlength="5" id="product_key_part_{index}"
             on:input={(event) => {
                 if(event.target.value.length == 5){
                     document.querySelector(`#product_key_part_${index+1}`).focus();

@@ -153,7 +153,7 @@
 
 </style>
 
-<div class="h-screen w-screen overflow-hidden flex flex-col bg-[#5a7edc]">
+<div class="absolute inset-0 overflow-hidden flex flex-col bg-[#5a7edc]">
   <div class="h-[70px] bg-[#00309c] flex flex-row items-center shrink-0">
     <img src="/images/xp_logo_horizontal.png" class="h-[40px] ml-4" alt="" />
   </div>
