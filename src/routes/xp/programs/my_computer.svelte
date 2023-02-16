@@ -1,7 +1,7 @@
 <script>
     import Window from '../../../lib/components/xp/Window.svelte';
     import {onMount } from 'svelte';
-    import { runningPrograms, zIndex, hardDrive, selectingItems } from '../../../lib/store'
+    import { runningPrograms, zIndex, hardDrive, selectingItems, queueProgram } from '../../../lib/store'
     import {recycle_bin_id, icons} from '../../../lib/system';
     import Menu from '../../../lib/components/xp/Menu.svelte';
     import RButton from '../../../lib/components/xp/RButton.svelte';
@@ -146,15 +146,18 @@
             items: [
                 [
                     {
-                        name: 'Help and Support Center'
+                        name: 'Help and Support Center',
+                        action: () => open_link('https://docs.win32.run')
                     },
                     {
-                        name: 'Is this copy legal?'
+                        name: 'Is this copy legal?',
+                        action: () => open_link('https://docs.win32.run')
                     }
                 ],
                 [
                     {
-                        name: 'About Windows'
+                        name: 'About Windows',
+                        action: () => open_link('https://docs.win32.run')
                     }
                 ]
             ]
@@ -227,6 +230,13 @@
     export function up(){
         let parent_id = $hardDrive[history[page_index]].parent;
         open(parent_id);
+    }
+
+    function open_link(link){
+        queueProgram.set({
+            path: './programs/internet_explorer.svelte',
+            fs_item: {url: link}
+        })
     }
 
 </script>

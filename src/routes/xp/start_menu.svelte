@@ -93,11 +93,7 @@
             name: 'Help and Support',
             icon: '/images/xp/icons/HelpandSupport.png',
             path: './programs/webapp.svelte',
-            webapp: {
-                url: 'https://docs.win32.run',
-                icon: '/images/xp/icons/HelpandSupport.png',
-                name: 'Help and Support'
-            }
+            link: 'https://docs.win32.run'
         },
         null,
         {
@@ -409,15 +405,25 @@
 
     function launch(item){
         console.log(item);
-        let {path, fs_item, webapp} = item;
-        if(path){
+        let {path, fs_item, webapp, link } = item;
+        if(link){
+            open_link(link);
+
+        } else if(path){
             queueProgram.set({
                 path, 
                 fs_item,
                 webapp
             })
-            hide();
         }
+        hide();
+    }
+
+    function open_link(link){
+        queueProgram.set({
+            path: './programs/internet_explorer.svelte',
+            fs_item: {url: link}
+        })
     }
 
     async function show_shutdown_panel(){
