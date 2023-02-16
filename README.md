@@ -1,24 +1,36 @@
-# Introduction
+### Yet another Windows XP in the browser, with a File System, programs, custom file picker and saver dialogs, 3rd-party program, etc.
+### [🍭 win32.run](https://win32.run)
 
+![License MIT](https://badgen.net/badge/license/MIT/green)
+[![css tailwind](https://badgen.net/badge/css/tailwind/blue)](https://github.com/tailwindlabs/tailwindcss)
+[![js framework svelte](https://badgen.net/badge/built/svelte/orange)](https://github.com/sveltejs/svelte)
 
 https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b162-e2817c0f9db8.mp4
+#
+*Microsoft and Windows XP trademarks & logos definitely belong to Microsoft Corporation. All the programs' names and logos (Foxit, Word, WinRar, Internet Explorer, etc.) are of their rightful copyright holders. **win32.run** is purely for the **purpose of nostalgia**. I have no intent and no right to monetize  **win32.run**, but you may occasionally see ads when playing third-party games.*
 
-
-Windows XP in JavaScript, with a File System, programs, custom file picker and saver dialogs, 3rd-party program, etc.
-
-*Microsoft and Windows XP trademarks & logos definitely belong to Microsoft Corporation. All the programs' names and logos (Foxit, Word, WinRar, Internet Explorer, etc.) are of their rightful copyright holders. **win32.run** is purely for the purpose of nostalgia. I have no intent and no right to monetize  **win32.run**, but you may occasionally see ads when playing third-party games.*
+# Introduction
+### 💖 It's for nostalgia's sake!
 
 **WIN32.RUN** runs solely on the client-side (the user's browser). All files are processed right in the user's browser. There is no file uploading, no server-side processing (cause I'm broke, can't afford it). Each user has his own OS session (just like the good old Windows XP)
 
 Files (and Folders) in win32.run are stored locally in IndexedDB. Apps (and 3rd-party apps) can interact with files through win32.run homemade file picker and saver dialog (with Windows XP appearance).
+# Built with
+WIN32.RUN is built with [Svelte](https://github.com/sveltejs/svelte)/[SvelteKit](https://github.com/sveltejs/kit) and [Tailwindcss](https://github.com/tailwindlabs/tailwindcss).
+If you come from a React or Vue background, Svelte is really easy to work with. It doesn't have much boilerplate. 
+
+Writing webapps in Svelte is just like writing vanilla JS, with ```div``` tag for UI and ```script``` tag for logic. One can pick it up in under an hour.
+
+The downside is *surprised breaking changes*.
+
 # Run, build & deploy
 I deploy it on a $5 Vultr instance, so there's no special hardware and dependencies requirement here, except Node.js (and NPM).
 
 The project is built with [Svelte](https://github.com/sveltejs/svelte), which may not be great at backward-compatibity at its current phase.  You probably don't want to update Svelte and SvelteKit to newer versions to keep things working.
-## Install dependencies
+## 📦 Install dependencies
 Clone or download from Github
 ```shell
-git clone git@github.com:ducbao414/win32.run.git
+git clone https://github.com/ducbao414/win32.run.git
 cd win32.run
 ```
 Then install dependencies
@@ -48,4 +60,4 @@ Put the build folder, package.json, package-lock.json on to the server, ```cd```
 
 Finally, ```pm2 start build/index.js``` to start win32 at localhost:3000
 # Documentation
-Please visit [win32 Docs](https://docs.win32.run)
+[![Please visit docs.win32.run](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](https://docs.win32.run)
