@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b
 **WIN32.RUN** runs solely on the client-side (the user's browser). All files are processed right in the user's browser. There is no file uploading, no server-side processing (cause I'm broke, can't afford it). Each user has his own OS session (just like the good old Windows XP)
 
 Files (and Folders) in win32.run are stored locally in IndexedDB. Apps (and 3rd-party apps) can interact with files through win32.run homemade file picker and saver dialog (with Windows XP appearance).
-## 🔥 Built with
+## Built with
 WIN32.RUN is built with [Svelte](https://github.com/sveltejs/svelte)/[SvelteKit](https://github.com/sveltejs/kit) and [Tailwindcss](https://github.com/tailwindlabs/tailwindcss).
 If you come from a React or Vue background, Svelte is really easy to work with. It doesn't have much boilerplate. 
 
