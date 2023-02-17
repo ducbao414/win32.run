@@ -1,4 +1,4 @@
-### Yet another Windows XP in the browser, with a File System, programs, custom file picker and saver dialogs, 3rd-party program, etc.
+### Yet another Windows XP in the browser, with a File System, programs, XP-style File Picker and Saver dialogs, 3rd-party program, etc.
 ## [🍭 win32.run](https://win32.run)
 
 ![License MIT](https://badgen.net/badge/license/MIT/green)
@@ -46,7 +46,7 @@ The dev server is at http://localhost:3000
 ```shell
 npm run build
 ```
-The build output location is win32.run/build
+The build output location is win32.run-main/build
 To preview the build
 ```shell
 npm run preview
@@ -60,4 +60,6 @@ Put the build folder, package.json, package-lock.json on to the server, ```cd```
 
 Finally, ```pm2 start build/index.js``` to start win32 at localhost:3000
 # Documentation
+If you're interested in expanding or customizing win32.run, please have a look at its documentation.
+
 [![Please visit docs.win32.run](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](https://docs.win32.run)
