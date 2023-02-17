@@ -4,7 +4,34 @@
 
     export let self;
 
+    let fallback_timer;
+    let destroyed = false;
+
+    onMount(() => {
+        
+        let welcome_audio = new Audio("/audio/xp_startup.mp3");
+        welcome_audio.addEventListener("canplaythrough", (e) => {
+            console.log('canplaythrough');
+            if(!destroyed){
+                welcome_audio.play().catch(async (e) => {
+                });
+            }
+        });
+
+        welcome_audio.addEventListener("ended", (e) => {
+            console.log("xp_startup audio ended");
+            clearTimeout(fallback_timer);
+            self.destroy();
+        });
+
+        fallback_timer = setTimeout(() => {
+            self.destroy();
+        }, 7000)
+
+    })
+
     export function destroy(){
+        destroyed = true;
         self.$destroy();
     }
     

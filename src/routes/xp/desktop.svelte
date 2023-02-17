@@ -53,7 +53,6 @@
     ];
 
     let welcome_scene;
-    let fallback_timer;
 
     onMount(async () => {
         //load other pure js lib
@@ -65,26 +64,6 @@
         ]);
 
         welcome_scene.self = welcome_scene;
-        fallback_timer = setTimeout(() => {
-            welcome_scene.destroy();
-        }, 7000)
-
-        let welcome_audio = new Audio("/audio/xp_startup.mp3");
-        welcome_audio.addEventListener("canplaythrough", (e) => {
-            console.log('canplaythrough');
-            if(welcome_scene){
-                welcome_audio.play().catch(async (e) => {
-                    await utils.sleep(4000);
-                    clearTimeout(fallback_timer);
-                    welcome_scene.destroy();
-                });
-            }
-        });
-        welcome_audio.addEventListener("ended", (e) => {
-            console.log("xp_startup audio ended");
-            clearTimeout(fallback_timer);
-            welcome_scene.destroy();
-        });
 
     });
 
