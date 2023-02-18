@@ -53,6 +53,8 @@
                 last_sort_tx_hash = hash;
                 worker.postMessage({type: 'sort', hash, ...hash_object});
             }
+        } else {
+            last_sort_tx_hash = null;
         }
     }
 

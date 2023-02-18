@@ -51,7 +51,7 @@ onmessage = async ({data}) => {
             return elm[option_key];
         }
     }
-    
+
     let sorted_items = sort(items).by([predicate]);
 
     postMessage({id, sorted_items, type: 'sorted'})
