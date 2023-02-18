@@ -339,3 +339,9 @@ export function sanitize_filename(name){
 export function browser_window(){
   return window;
 }
+
+export function timestamp_to_readable(timestamp){
+  let date = new Date();
+  date.setTime(timestamp);
+  return date.toString();
+}

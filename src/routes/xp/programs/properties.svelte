@@ -35,7 +35,9 @@
         ...fs_item?.type == 'file' ? [] : 
         [
             ['Contains', `${fs_item.children.filter(el => $hardDrive[el].type == 'file').length} Files, ${fs_item.children.filter(el => $hardDrive[el].type == 'folder').length} Folders`]
-        ]
+        ],
+        ['Date Created', utils.timestamp_to_readable(fs_item.date_created)],
+        ['Last Modified', utils.timestamp_to_readable(fs_item.date_modified)]
     ]
 
     onMount(() => {
@@ -127,7 +129,7 @@
                     <div class="shrink-0 w-[70px]">
                         {detail[0]}
                     </div>
-                    <div class="grow ml-2 break-all">
+                    <div class="grow ml-2 {detail[0] == 'Location' ? 'break-all' : 'break-words'}">
                         {detail[1]}
                     </div>
                 </div>
