@@ -19,12 +19,26 @@
     let page_index = 0;
     $: url = finder.to_url(history[page_index]) || 'My Computer';
     $: {
-        if(history[page_index] != recycle_bin_id){
+        let curr_id = history[page_index];
+        
+        if(curr_id == null){
             window?.update_icon('/images/xp/icons/MyComputer.png');
             window?.update_title('My Computer');
-        } else {
+
+        } else if(curr_id == recycle_bin_id) {
             window?.update_icon('/images/xp/icons/RecycleBinempty.png');
             window?.update_title('Recycle Bin');
+
+        } else {
+            let curr_item = $hardDrive[curr_id];
+            if(curr_item){
+                if(curr_item.icon){
+                    window?.update_icon(curr_item.icon);
+                } else {
+                    window?.update_icon('/images/xp/icons/FolderClosed.png');
+                }
+                window?.update_title(curr_item.name);
+            }
         }
     }
 
@@ -207,6 +221,9 @@
         }
         if(icons[item.ext] != null){ 
             return `url(/images/xp/icons/${icons[item.ext]})`
+        }
+        if(item.id == recycle_bin_id){
+            return `url(/images/xp/icons/RecycleBinempty.png)`;
         }
         return null;
     }
