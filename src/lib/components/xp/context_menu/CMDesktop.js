@@ -22,36 +22,36 @@ export let make = ({type, originator}) => {
         required_height: 27*6  + 20,
         menu: [
             [
-                {
-                    name: 'Sort By',
-                    items: [
-                        ...sort_menu_items.map(item => {
-                            return {
-                                ...item,
-                                check: item.value == get(hardDrive)[originator.id].sort_option,
-                                action: () => {
-                                    hardDrive.update(data => {
-                                        data[originator.id].sort_option = item.value;
-                                        return data;
-                                    })
-                                }
-                            }
-                        }),
-                        null,
-                        ...sort_order_menu_items.map(item => {
-                            return {
-                                ...item,
-                                check: item.value == get(hardDrive)[originator.id].sort_order,
-                                action: () => {
-                                    hardDrive.update(data => {
-                                        data[originator.id].sort_order = item.value;
-                                        return data;
-                                    })
-                                }
-                            }
-                        }),
-                    ]
-                },
+                // {
+                //     name: 'Sort By',
+                //     items: [
+                //         ...sort_menu_items.map(item => {
+                //             return {
+                //                 ...item,
+                //                 check: item.value == get(hardDrive)[originator.id].sort_option,
+                //                 action: () => {
+                //                     hardDrive.update(data => {
+                //                         data[originator.id].sort_option = item.value;
+                //                         return data;
+                //                     })
+                //                 }
+                //             }
+                //         }),
+                //         null,
+                //         ...sort_order_menu_items.map(item => {
+                //             return {
+                //                 ...item,
+                //                 check: item.value == get(hardDrive)[originator.id].sort_order,
+                //                 action: () => {
+                //                     hardDrive.update(data => {
+                //                         data[originator.id].sort_order = item.value;
+                //                         return data;
+                //                     })
+                //                 }
+                //             }
+                //         }),
+                //     ]
+                // },
                 {
                     name: 'Refresh',
                     action: () => {
