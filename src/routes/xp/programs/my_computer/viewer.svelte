@@ -14,6 +14,7 @@
     let dispatch = createEventDispatcher();
     import DragSelect from 'dragselect';
     import Previewable from '../../../../lib/components/xp/Previewable.svelte';
+    import hash_sum from 'hash-sum';
 
     export let self;
     export let my_computer_instance;
@@ -26,6 +27,34 @@
         .map(id => $hardDrive[id])
         .filter(el => el != null)
         .filter(el => !hidden_items.includes(el.id));
+
+    $: sorted_items = id ? null : null;//reset sorted_items every time id changes
+    let worker = new Worker(new URL('./sort.js', import.meta.url), {type: 'module'});
+    worker.onmessage = ({data}) => {
+        if(data.type == 'sorted' && data.id == id){
+            console.log('update sorted_items', id);
+            sorted_items = data.sorted_items;
+        }
+    }
+
+    let last_sort_tx_hash;
+    $: {
+        if(id){
+            let hash_object = {
+                id,
+                items, 
+                sort_option: $hardDrive[id].sort_option, 
+                sort_order: $hardDrive[id].sort_order
+            };
+
+            let hash = hash_sum(hash_object);
+            console.log({hash})
+            if(hash != last_sort_tx_hash){
+                last_sort_tx_hash = hash;
+                worker.postMessage({type: 'sort', hash, ...hash_object});
+            }
+        }
+    }
 
     $: is_focus = $zIndex == my_computer_instance?.window.z_index;
     let computer = my_computer.map(el => $hardDrive[el]);
@@ -257,34 +286,38 @@
     on:drop={on_drop} on:dragover={on_drop_over} bind:this={node_ref}>
     <div class="w-full min-h-full" class:hidden={id == null} 
         on:contextmenu|self={show_void_menu}>
-        {#each items as item}
-            <div fs-id="{item.id}" class="fs-item w-[150px] overflow-hidden m-2 inline-flex flex-row items-center font-MSSS relative
-                {$clipboard.includes(item.id) && $clipboard_op == 'cut' ? 'opacity-70' : ''}" 
-                on:dblclick={() => open(item.id)} on:contextmenu={(e) => on_rightclick(e, item)}>
-                {#if previewable_exts.includes(item.ext)}
-                    <Previewable default_icon={file_icon(item)} fs_id={item.id}></Previewable>
-                {:else}
-                    <div class="w-[50px] h-[50px] shrink-0 bg-contain bg-no-repeat bg-center
-                    {item.type == 'folder' ? 'bg-[url(/images/xp/icons/FolderClosed.png)]' : 'bg-[url(/images/xp/icons/Default.png)]'} "
-                        style:background-image="{file_icon(item)}">
-                    </div>
-                {/if}
-                <p class="px-1 mx-0.5 text-[11px] break-words line-clamp-2 text-ellipsis leading-tight
-                    {$selectingItems?.includes(item.id) && is_focus ? 'bg-blue-600 text-slate-50' : ''}">
-                    {item.name}
-                </p>
-                {#if $selectingItems.includes(item.id) && renaming}
-                    <textarea
-                        autofocus
-                        on:keydown={e => e.key == 'Enter' && end_renaming(e, item)}
-                        on:blur={(e) => end_renaming(e, item)}
-                        class="absolute max-h-[40px] right-0 top-2 left-[50px] overflow-hidden 
-                        outline-none border border-slate-900 text-[11px] font-MSSS z-50 resize-none"
-                    >{item.name}</textarea>
-                {/if}
-                
-            </div>
-        {/each}
+        {#if sorted_items}
+            {#each sorted_items as item (item.id)}
+                <div fs-id="{item.id}" class="fs-item w-[150px] overflow-hidden m-2 inline-flex flex-row items-center font-MSSS relative
+                    {$clipboard.includes(item.id) && $clipboard_op == 'cut' ? 'opacity-70' : ''}" 
+                    on:dblclick={() => open(item.id)} on:contextmenu={(e) => on_rightclick(e, item)}>
+                    {#if previewable_exts.includes(item.ext)}
+                        <Previewable default_icon={file_icon(item)} fs_id={item.id}></Previewable>
+                    {:else}
+                        <div class="w-[50px] h-[50px] shrink-0 bg-contain bg-no-repeat bg-center
+                        {item.type == 'folder' ? 'bg-[url(/images/xp/icons/FolderClosed.png)]' : 'bg-[url(/images/xp/icons/Default.png)]'} "
+                            style:background-image="{file_icon(item)}">
+                        </div>
+                    {/if}
+                    <p class="px-1 mx-0.5 text-[11px] break-words line-clamp-2 text-ellipsis leading-tight
+                        {$selectingItems?.includes(item.id) && is_focus ? 'bg-blue-600 text-slate-50' : ''}">
+                        {item.name}
+                    </p>
+                    {#if $selectingItems.includes(item.id) && renaming}
+                        <textarea
+                            autofocus
+                            on:keydown={e => e.key == 'Enter' && end_renaming(e, item)}
+                            on:blur={(e) => end_renaming(e, item)}
+                            class="absolute max-h-[40px] right-0 top-2 left-[50px] overflow-hidden 
+                            outline-none border border-slate-900 text-[11px] font-MSSS z-50 resize-none"
+                        >{item.name}</textarea>
+                    {/if}
+                    
+                </div>
+            {/each}
+        {:else}
+            <p class="text-center text-sm font-Trebuchet my-2 text-slate-500">working on it...</p>
+        {/if}
 
         
     </div>

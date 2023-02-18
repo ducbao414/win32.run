@@ -231,7 +231,7 @@
 
     <div class="top-0 left-0 bottom-0 absolute flex flex-col flex-wrap" 
         class:hidden={id == null}>
-        {#each items as item, index}
+        {#each items as item, index (item.id)}
 
             <div fs-id="{item.id}" class="relative fs-item w-[150px] flex-shrink-0 flex-grow-0 overflow-hidden m-2 inline-flex flex-col items-center font-MSSS" 
                 on:dblclick={() => open(item.id)} on:contextmenu={(e) => on_rightclick(e, item)}

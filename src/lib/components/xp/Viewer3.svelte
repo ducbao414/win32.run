@@ -128,7 +128,7 @@
 
     </div>
     <div class="absolute top-7 left-1 right-1 h-[360px] overflow-auto bg-slate-50 border border-blue-300" class:hidden={id == null}>
-        {#each items as item}
+        {#each items as item (item.id)}
             <div fs-id="{item.id}" class="w-[100px] overflow-hidden m-2 inline-flex flex-row items-center font-MSSS relative
                 {is_desired(item) ? '' : 'opacity-50'}" 
                 on:dblclick={() => open(item.id)}>
