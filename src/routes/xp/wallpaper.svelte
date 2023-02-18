@@ -19,8 +19,18 @@
             let file = await get(fs_item.url);
             url = URL.createObjectURL(file);
         }
+        
+        await load_image_url(url);
         cached_url = url;
         return url;
+    }
+
+    function load_image_url(url){
+        return new Promise(resolve => {
+            let image = new Image();
+            image.src = url;
+            image.onload = () => resolve();
+        })
     }
     
 </script>
