@@ -1,5 +1,5 @@
 import { queueProgram, clipboard, selectingItems, hardDrive, clipboard_op } from './store';
-import { recycle_bin_id, protected_items } from './system';
+import { recycle_bin_id, protected_items, SortOptions, SortOrders } from './system';
 import * as utils from './utils';
 import { get } from 'svelte/store';
 import short from 'short-uuid';
@@ -164,7 +164,9 @@ export async function new_fs_item(type, ext, seedname, parent_id, file=null){
         "children": [],
         "basename": "",
         date_created: now,
-        date_modified: now
+        date_modified: now,
+        sort_option: SortOptions.NONE,
+        sort_order: SortOrders.ASCENDING
     }
 
     let children = get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el]);
@@ -236,6 +238,8 @@ export async function new_fs_item_raw(item, parent_id){
     let now = (new Date()).getTime();
     item.date_created = now;
     item.date_modified = now;
+    item.sort_option = SortOptions.NONE,
+    item.sort_order = SortOrders.ASCENDING
     
     let children = get(hardDrive)[parent_id].children.map(el => get(hardDrive)[el]);
 
@@ -287,9 +291,14 @@ export async function save_file(fs_id, file){
     }
     let url = short.generate();
     await idb.set(url, file);
+
+    let parent_id = get(hardDrive)[fs_id].parent;
+    let now = (new Date()).getTime();
     hardDrive.update(data => {
         data[fs_id].url = url;
         data[fs_id].storage_type = 'local';
+        data[fs_id].date_modified = now;
+        data[parent_id].date_modified = now;
         return data;
     })
 }
@@ -307,6 +316,7 @@ export async function save_file_as(basename, ext, file, parent_id, new_id=null){
         new_id = short.generate();
     }
 
+    let now = (new Date()).getTime();
     let obj = {
         "id": new_id,
         "type": 'file',
@@ -319,7 +329,11 @@ export async function save_file_as(basename, ext, file, parent_id, new_id=null){
         "parent": parent_id,
         "size": Math.round(file.size/1024),
         "children": [],
-        "basename": basename
+        "basename": basename,
+        date_created: now,
+        date_modified: now,
+        sort_option: SortOptions.NONE,
+        sort_order: SortOrders.ASCENDING
     }
 
     let parent_items_names = [
@@ -338,6 +352,7 @@ export async function save_file_as(basename, ext, file, parent_id, new_id=null){
     hardDrive.update(data => {
         data[obj.id] = obj;
         data[parent_id].children.push(obj.id);
+        data[parent_id].date_modified = now;
         return data;
     })
 }
