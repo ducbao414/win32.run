@@ -166,9 +166,19 @@
                 classes: {
                     "ui-resizable-se": "ui-icon ui-icon-gripsmall-diagonal-se opacity-0"
                 },
+                start: () => {
+                    let iframe = node_ref.querySelector('iframe');
+                    if(iframe){
+                        iframe.style.pointerEvents = 'none';
+                    }
+                },
                 stop: async () => {
                     if(options.exec_path){
                         await set(options.exec_path, node_ref.getBoundingClientRect())
+                    }
+                    let iframe = node_ref.querySelector('iframe');
+                    if(iframe){
+                        iframe.style.removeProperty('pointer-events');
                     }
                 }
             })
