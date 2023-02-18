@@ -39,7 +39,7 @@
 
     let last_sort_tx_hash;
     $: {
-        if(id){
+        if($hardDrive[id]){
             let hash_object = {
                 id,
                 items, 
