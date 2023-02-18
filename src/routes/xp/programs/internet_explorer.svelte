@@ -248,7 +248,7 @@
                 <div class="w-[20px] h-[20px] bg-[url(/images/ms.png)] bg-contain bg-center bg-no-repeat"></div>
             </div>
         </div>
-        <div class="shrink-0 flex flex-row items-center border-b border-stone-300">
+        <div class="shrink-0 flex flex-row items-center border-b border-stone-300 overflow-hidden">
             <RButton icon="/images/xp/icons/Back.png" title="Back" 
                     on_click={back}
                     expandable={true} disabled={page_index == 0} tooltip_message="Back to Previous"></RButton>
