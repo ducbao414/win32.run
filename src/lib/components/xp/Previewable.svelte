@@ -32,8 +32,11 @@
         if(preview_url != null) return;
         if(fs_id == null) return;
         let url = await fs.get_url(fs_id);
-        // console.log('load', fs_id, 'with url', url);
-        preview_url = `url(${url})`;
+
+        let image = new Image();
+        image.src = url;
+        image.onload = () => preview_url = `url(${url})`;
+        
     }
 
 </script>

@@ -286,7 +286,7 @@
 </style>
 <div class="absolute inset-0 overflow-auto bg-slate-50"
     on:drop={on_drop} on:dragover={on_drop_over} bind:this={node_ref}>
-    <div class="w-full min-h-full" class:hidden={id == null} 
+    <div class="w-full min-h-[90%]" class:hidden={id == null} 
         on:contextmenu|self={show_void_menu}>
         {#if sorted_items}
             {#each sorted_items as item (item.id)}
