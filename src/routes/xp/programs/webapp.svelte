@@ -14,6 +14,7 @@
     export let self;
     export let parentNode;
     export let webapp;
+    let webapp_url;
     export let exec_path;
 
     let iframe;
@@ -21,7 +22,7 @@
     let background = webapp?.background || '#ffffff';
 
     onMount(async () => {
-        webapp.url = transform(webapp.url)
+        webapp_url = transform(webapp.url)
     })
 
     export async function destroy(){
@@ -196,7 +197,7 @@
         return url.href;
     }
     async function send_message(data){
-        iframe.contentWindow.postMessage(data, (new URL(webapp.url)).origin);
+        iframe.contentWindow.postMessage(data, (new URL(webapp_url)).origin);
     }
 
 </script>
@@ -217,7 +218,7 @@
             <!-- svelte-ignore a11y-missing-attribute -->
             <iframe 
                 class="w-full h-full {!iframe_loaded ? 'hidden' : ''} {window?.z_index == $zIndex ? 'pointer-events-auto' : 'pointer-events-none'}" 
-                bind:this={iframe} src={webapp.url} 
+                bind:this={iframe} src={webapp_url} 
                 allow="gamepad *;" frameborder="0" allowfullscreen
                 style:background-color="{background}"
                 on:load={setup_webapp}>
