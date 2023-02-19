@@ -371,6 +371,17 @@
             
         },
         {
+            name: 'Python REPL',
+            icon: '/images/xp/icons/Python.png',
+            path: './programs/webapp.svelte',
+            "webapp": {
+                "background": "#000000",
+                "url": "https://pyodide.org/en/stable/console.html",
+                "name": "Python REPL",
+                "icon": "/images/xp/icons/Python.png"
+            },
+        },
+        {
             name: 'Koodo Reader',
             icon: '/images/xp/icons/Koodo.png',
             path: './programs/koodo.svelte',
