@@ -487,7 +487,7 @@
                 </div>
 
                 <div class="absolute left-[90%] bottom-0 w-[250px] shadow-xl border-t border-l-4 border-blue-500 hidden group-hover:block bg-slate-50">
-                    <div class="absolute -left-[70px] bottom-0 w-[820px] h-[500px] ">
+                    <div class="absolute -left-[50px] bottom-0 w-[820px] h-[500px] ">
                         <div class="absolute left-[300px] top-0 -bottom-[100px] right-0 " on:click|self={hide}></div>
                     </div>
                     {#each programs as item}
