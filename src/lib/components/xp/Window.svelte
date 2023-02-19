@@ -26,9 +26,13 @@
     onMount(async () => {
         if(options.exec_path != null){
             let rect = await get(options.exec_path);
-            console.log(rect);
             if(rect){
+                rect = {top: rect.top, left: rect.left, width: rect.width, height: rect.height};
                 let workspace = document.querySelector('#work-space');
+                let nudge = calc_nudges(rect);
+                rect.top = rect.top + nudge.top;
+                rect.left = rect.left + nudge.left;
+
                 if(rect.left + rect.width <= workspace.offsetWidth
                 && rect.top + rect.height <= workspace.offsetHeight){
                     options.top = rect.top;
@@ -45,7 +49,7 @@
         if(options.left == null){
             options.left = (node_ref.parentNode.offsetWidth - node_ref.offsetWidth)/2;
         }
-        set_position({top: options.top, left: options.left, width: node_ref.width, height: node_ref.height});
+        set_position({top: options.top, left: options.left, width: options.width, height: options.height});
         
         if(options.resizable == null){
             options.resizable = true;
@@ -115,13 +119,32 @@
         }
     }
 
-    
-
     export function loose_focus(){
         if(z_index == $zIndex){
             console.log('loose focus');
             zIndex.update(value => value + 1);
         }
+    }
+
+    function calc_nudges({top, left, width, height}){
+        let existing_window = $runningPrograms.findLast(el => {
+            return el.options.id != options.id
+                && el.options.exec_path == options.exec_path;
+        });
+        if(existing_window == null) return {top: 0, left: 0}
+        
+        let pad = 10;
+        let nudges = [[pad, pad], [pad, -pad], [-pad, pad], [-pad, -pad], [0, 0]];
+        let workspace = document.querySelector('#work-space');
+        for(let nudge of nudges){
+            if(top + nudge[0] >= 0
+            && left + nudge[1] >= 0
+            && top + height + nudge[0] <= workspace.offsetHeight
+            && left + width + nudge[1] <= workspace.offsetWidth){
+                return {top: nudge[0], left: nudge[1]}
+            }
+        }
+        return {top: 0, left: 0};
     }
 
     function get_center_point(rect){
@@ -139,6 +162,10 @@
         node_ref.style.left = `${left}px`;
         node_ref.style.width = `${width}px`;
         node_ref.style.height = `${height}px`;
+        
+        if(options.exec_path){
+            set(options.exec_path, node_ref.getBoundingClientRect())
+        }
     }
 
     
