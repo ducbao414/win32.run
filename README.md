@@ -1,10 +1,19 @@
-### Yet another Windows XP in the browser, with a File System, programs, XP-style File Picker and Saver dialogs, 3rd-party program, etc.
+### Windows XP in the browser, with a File System, programs, XP-style File Picker and Saver dialogs, 3rd-party program, etc.
 ## [🍭 win32.run](https://win32.run)
 
 ![License MIT](https://badgen.net/badge/license/MIT/green)
 [![css tailwind](https://badgen.net/badge/css/tailwind/blue)](https://github.com/tailwindlabs/tailwindcss)
 [![js framework svelte](https://badgen.net/badge/built/svelte/orange)](https://github.com/sveltejs/svelte)
 
+**Note**: I'm refactoring the whole codebase to implement Switchable UI feature. This new feature will enable win32 to change its UI between Windows XP, Vista, 7, 10, 11, macOS, and Ubuntu on the fly, right in the setting.
+
+Until then, this branch will receive no further commits. I have a paying job (love this part :-)), and win32 is my hobby, so I don't know how much time it'll take for the new feature.
+In the mean time, win32.run will operate as usual.
+
+Thanks for your support.
+
+Cheers.
+#
 https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b162-e2817c0f9db8.mp4
 #
 *Microsoft and Windows XP trademarks & logos definitely belong to Microsoft Corporation. All the programs' names and logos (Foxit, Word, WinRar, Internet Explorer, etc.) are of their rightful copyright holders. **win32.run** is purely for the **purpose of nostalgia**. I have no intent and no right to monetize  **win32.run**, but you may occasionally see ads when playing third-party games.*
