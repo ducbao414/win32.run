@@ -5,14 +5,12 @@
 [![css tailwind](https://badgen.net/badge/css/tailwind/blue)](https://github.com/tailwindlabs/tailwindcss)
 [![js framework svelte](https://badgen.net/badge/built/svelte/orange)](https://github.com/sveltejs/svelte)
 
-**Note**: I'm refactoring the whole codebase to implement Switchable UI feature. This new feature will enable win32 to change its UI between Windows XP, Vista, 7, 10, 11, macOS, and Ubuntu on the fly, right in the setting.
+### This project has been discontinued. 
+Even though I don't enjoy React syntax and its methodology, NextJS by Vercel offers better developer experience than SvelteKit is everyway imaginable: it has better backward compatibility, improved tooling, comprehensive documentation, stabability, seamless functionality ( everything just worked as expected), a rich 3rd libs, less memory consupmtion, etc.
 
-Until then, this branch will receive no further commits. I have a paying job (love this part :-)), and win32 is my hobby, so I don't know how much time it'll take for the new feature.
-In the mean time, win32.run will operate as usual.
+While it has been an enjoyable experience working on win32.run, the numerous breaking changes in SvelteKit have rendered its codebase incomprehensible to other developers. It will take a complete restructure to make it work with new SvelteKit releases. 
+I don't see this project contribute in any meaningful way to either developers ultilizing Svelte and those in the process of learning Svelte.
 
-Thanks for your support.
-
-Cheers.
 #
 https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b162-e2817c0f9db8.mp4
 #
