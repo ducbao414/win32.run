@@ -5,12 +5,6 @@
 [![css tailwind](https://badgen.net/badge/css/tailwind/blue)](https://github.com/tailwindlabs/tailwindcss)
 [![js framework svelte](https://badgen.net/badge/built/svelte/orange)](https://github.com/sveltejs/svelte)
 
-### This project has been discontinued. 
-Even though I don't enjoy React syntax and its methodology, NextJS by Vercel offers better developer experience than SvelteKit is everyway imaginable: it has better backward compatibility, improved tooling, comprehensive documentation, stabability, seamless functionality ( everything just worked as expected), a rich 3rd libs, less memory consupmtion, etc.
-
-While it has been an enjoyable experience working on win32.run, the numerous breaking changes in SvelteKit have rendered its codebase incomprehensible to other developers. It will take a complete restructure to make it work with new SvelteKit releases. 
-I don't see this project contribute in any meaningful way to either developers ultilizing Svelte and those in the process of learning Svelte.
-
 #
 https://user-images.githubusercontent.com/5462728/218907749-22ddea15-8761-4cf3-b162-e2817c0f9db8.mp4
 #
@@ -70,3 +64,9 @@ Finally, ```pm2 start build/index.js``` to start win32 at localhost:3000
 If you're interested in expanding or customizing win32.run, please have a look at its documentation.
 
 [![Please visit docs.win32.run](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](https://docs.win32.run)
+
+### This project has been discontinued. 
+Even though I don't enjoy React syntax and its methodology, NextJS by Vercel offers a better developer experience than SvelteKit in every way imaginable: it has better backward compatibility, improved tooling, comprehensive documentation, stabability, seamless functionality (everything just worked as expected), rich 3rd-party libraries, less memory consumption, etc.
+
+While it has been an enjoyable experience working on win32.run, the numerous breaking changes in SvelteKit have rendered its codebase incomprehensible to other developers. It will take a complete restructure to make it work with new SvelteKit releases. 
+I don't see this project contributing in any meaningful way to either developers utilizing Svelte or those in the process of learning Svelte.
